@@ -15,10 +15,13 @@ export default class Playlist extends React.Component {
           {title: "Bumbling Through The Ring: Terror's Realm p.1",
            videoId: 'A8NaIt6eFCk'},
         ],
-        currentVid: 1
+        currentVid: 1,
+        autoplay: true
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
       this.playVid = this.playVid.bind(this);
+      this.pauseVid = this.pauseVid.bind(this);
+      this.stateChange = this.stateChange.bind(this);
     }
 
     updateCurrentVid() {
@@ -32,8 +35,24 @@ export default class Playlist extends React.Component {
 
     playVid(event) {
       {/* autoplay */}
-     console.log(event.target);
      event.target.playVideo();
+    }
+
+    pauseVid(event) {
+      event.target.pauseVideo();
+    }
+
+    stateChange(event) {
+      console.log(event.data);
+      //  -1 (unstarted)
+      //   0 (ended)
+      //   1 (playing)
+      //   2 (paused)
+      //   3 (buffering)
+      //   5 (video cued).
+      if (event.data === 5) {
+        this.playVid(event);
+      }
     }
 
 
@@ -45,17 +64,19 @@ export default class Playlist extends React.Component {
       let vids = this.state.videos;
       let activeVid = vids[this.state.currentVid].videoId;
 
-      const playVid = this.playVid;
-      const updateCurrentVid = this.updateCurrentVid;
+      // const playVid = this.playVid;
+      // const updateCurrentVid = this.updateCurrentVid;
+      // const stateChange = this.stateChange;
 
       return(
         <div>
           <YouTube
-            playVid={playVid}
             videoId={activeVid}
             opts={opts}
-            onReady={(event) => playVid(event)}
-            onEnd={(event) => updateCurrentVid(event)}/>
+            onStateChange={(event) => this.stateChange(event)}
+            onPause={(event) => this.pauseVid(event)}
+            onReady={(event) => this.playVid(event)}
+            onEnd={() => this.updateCurrentVid()}/>
           <div className='playlist-wrapper'>
             {vids.map((vid, i) => {
               return(
