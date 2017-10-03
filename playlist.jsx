@@ -3,6 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 
+import { Button } from 'react-bootstrap';
+
 import YouTube from 'react-youtube';
 
 export default class Playlist extends React.Component {
@@ -20,8 +22,8 @@ export default class Playlist extends React.Component {
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
       this.playVid = this.playVid.bind(this);
-      this.pauseVid = this.pauseVid.bind(this);
       this.stateChange = this.stateChange.bind(this);
+      this.changeVideo = this.changeVideo.bind(this);
     }
 
     updateCurrentVid() {
@@ -34,25 +36,29 @@ export default class Playlist extends React.Component {
     }
 
     playVid(event) {
-      {/* autoplay */}
      event.target.playVideo();
     }
 
-    pauseVid(event) {
-      event.target.pauseVideo();
-    }
-
     stateChange(event) {
-      console.log(event.data);
+      // console.log(event.data);
       //  -1 (unstarted)
       //   0 (ended)
       //   1 (playing)
       //   2 (paused)
       //   3 (buffering)
       //   5 (video cued).
-      if (event.data === 5) {
+      {/* autoplay - play if cued up and autoplay is on */}
+      if (this.state.autoplay && event.data === 5) {
         this.playVid(event);
       }
+    }
+
+    changeVideo(vid, i) {
+      console.log('in changeVideo');
+      console.log(vid);
+      this.setState({
+        currentVid: i
+      });
     }
 
 
@@ -64,30 +70,44 @@ export default class Playlist extends React.Component {
       let vids = this.state.videos;
       let activeVid = vids[this.state.currentVid].videoId;
 
-      // const playVid = this.playVid;
-      // const updateCurrentVid = this.updateCurrentVid;
-      // const stateChange = this.stateChange;
+      const playVid = this.playVid;
+      const updateCurrentVid = this.updateCurrentVid;
+      const stateChange = this.stateChange;
+      const changeVideo = this.changeVideo;
 
       return(
         <div>
           <YouTube
             videoId={activeVid}
             opts={opts}
-            onStateChange={(event) => this.stateChange(event)}
-            onPause={(event) => this.pauseVid(event)}
-            onReady={(event) => this.playVid(event)}
-            onEnd={() => this.updateCurrentVid()}/>
+            onStateChange={(event) => stateChange(event)}
+            onReady={(event) => playVid(event)}
+            onEnd={() => updateCurrentVid()}/>
           <div className='playlist-wrapper'>
             {vids.map((vid, i) => {
               return(
                 <div
                   key={i}
                   className='playlist-el'
-                  onClick={() => changeVideo(vid)}>
+                  onClick={() => changeVideo(vid, i)}>
                   {vid.title}
                 </div>
               )
             })}
+          </div>
+          <div>
+            <Button>
+              Shuffle
+            </Button>
+            <Button>
+              Autoplay
+            </Button>
+            <Button>
+              Previous
+            </Button>
+            <Button>
+              Next
+            </Button>
           </div>
         </div>
       )
