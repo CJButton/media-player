@@ -24,6 +24,8 @@ export default class Playlist extends React.Component {
       this.playVid = this.playVid.bind(this);
       this.stateChange = this.stateChange.bind(this);
       this.changeVideo = this.changeVideo.bind(this);
+      this.shuffle = this.shuffle.bind(this);
+      this.autoplay = this.autoplay.bind(this);
     }
 
     updateCurrentVid() {
@@ -54,13 +56,21 @@ export default class Playlist extends React.Component {
     }
 
     changeVideo(vid, i) {
-      console.log('in changeVideo');
-      console.log(vid);
       this.setState({
         currentVid: i
       });
     }
 
+    autoplay() {
+      let newState = this.state.autoplay === true ? false : true
+      this.setState({
+        autoplay: newState
+      });
+    }
+
+    shuffle() {
+      // keep complexity down to a O(n)
+    }
 
     render() {
       const opts = {
@@ -74,6 +84,7 @@ export default class Playlist extends React.Component {
       const updateCurrentVid = this.updateCurrentVid;
       const stateChange = this.stateChange;
       const changeVideo = this.changeVideo;
+      const autoplay = this.autoplay;
 
       return(
         <div>
@@ -99,7 +110,8 @@ export default class Playlist extends React.Component {
             <Button>
               Shuffle
             </Button>
-            <Button>
+            <Button
+              onClick={() => autoplay()}>
               Autoplay
             </Button>
             <Button>

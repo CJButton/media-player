@@ -27109,6 +27109,8 @@
 	    _this.playVid = _this.playVid.bind(_this);
 	    _this.stateChange = _this.stateChange.bind(_this);
 	    _this.changeVideo = _this.changeVideo.bind(_this);
+	    _this.shuffle = _this.shuffle.bind(_this);
+	    _this.autoplay = _this.autoplay.bind(_this);
 	    return _this;
 	  }
 	
@@ -27145,11 +27147,22 @@
 	  }, {
 	    key: 'changeVideo',
 	    value: function changeVideo(vid, i) {
-	      console.log('in changeVideo');
-	      console.log(vid);
 	      this.setState({
 	        currentVid: i
 	      });
+	    }
+	  }, {
+	    key: 'autoplay',
+	    value: function autoplay() {
+	      var newState = this.state.autoplay === true ? false : true;
+	      this.setState({
+	        autoplay: newState
+	      });
+	    }
+	  }, {
+	    key: 'shuffle',
+	    value: function shuffle() {
+	      // keep complexity down to a O(n)
 	    }
 	  }, {
 	    key: 'render',
@@ -27165,6 +27178,7 @@
 	      var updateCurrentVid = this.updateCurrentVid;
 	      var stateChange = this.stateChange;
 	      var changeVideo = this.changeVideo;
+	      var autoplay = this.autoplay;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -27207,7 +27221,10 @@
 	          ),
 	          _react2.default.createElement(
 	            _reactBootstrap.Button,
-	            null,
+	            {
+	              onClick: function onClick() {
+	                return autoplay();
+	              } },
 	            'Autoplay'
 	          ),
 	          _react2.default.createElement(
