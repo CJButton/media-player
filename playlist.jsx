@@ -80,11 +80,14 @@ export default class Playlist extends React.Component {
       let vids = this.state.videos;
       let activeVid = vids[this.state.currentVid].videoId;
 
-      const playVid = this.playVid;
-      const updateCurrentVid = this.updateCurrentVid;
-      const stateChange = this.stateChange;
-      const changeVideo = this.changeVideo;
-      const autoplay = this.autoplay;
+      const {
+        playVid,
+        updateCurrentVid,
+        stateChange,
+        changeVideo,
+        autoplay,
+        shuffle
+      } = this;
 
       return(
         <div>
@@ -107,7 +110,8 @@ export default class Playlist extends React.Component {
             })}
           </div>
           <div>
-            <Button>
+            <Button
+              onClick={() => shuffle()}>
               Shuffle
             </Button>
             <Button

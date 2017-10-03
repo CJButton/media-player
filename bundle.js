@@ -27174,11 +27174,13 @@
 	      var vids = this.state.videos;
 	      var activeVid = vids[this.state.currentVid].videoId;
 	
-	      var playVid = this.playVid;
-	      var updateCurrentVid = this.updateCurrentVid;
-	      var stateChange = this.stateChange;
-	      var changeVideo = this.changeVideo;
-	      var autoplay = this.autoplay;
+	      var playVid = this.playVid,
+	          updateCurrentVid = this.updateCurrentVid,
+	          stateChange = this.stateChange,
+	          changeVideo = this.changeVideo,
+	          autoplay = this.autoplay,
+	          shuffle = this.shuffle;
+	
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -27216,7 +27218,10 @@
 	          null,
 	          _react2.default.createElement(
 	            _reactBootstrap.Button,
-	            null,
+	            {
+	              onClick: function onClick() {
+	                return shuffle();
+	              } },
 	            'Shuffle'
 	          ),
 	          _react2.default.createElement(
