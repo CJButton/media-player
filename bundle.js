@@ -27076,9 +27076,9 @@
 	
 	var _reactRouter = __webpack_require__(184);
 	
-	var _mplayer = __webpack_require__(243);
+	var _reactYoutube = __webpack_require__(244);
 	
-	var _mplayer2 = _interopRequireDefault(_mplayer);
+	var _reactYoutube2 = _interopRequireDefault(_reactYoutube);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27103,6 +27103,7 @@
 	      currentVid: 1
 	    };
 	    _this.updateCurrentVid = _this.updateCurrentVid.bind(_this);
+	    _this.playVid = _this.playVid.bind(_this);
 	    return _this;
 	  }
 	
@@ -27117,20 +27118,38 @@
 	      });
 	    }
 	  }, {
+	    key: 'playVid',
+	    value: function playVid(event) {
+	      {/* autoplay */}
+	      console.log(event.target);
+	      event.target.playVideo();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var vids = this.state.videos;
-	      var currentVid = this.state.videos[this.state.currentVid].videoId;
+	      var opts = {
+	        height: '390',
+	        width: '640' };
 	
+	      var vids = this.state.videos;
+	      var activeVid = vids[this.state.currentVid].videoId;
+	
+	      var playVid = this.playVid;
 	      var updateCurrentVid = this.updateCurrentVid;
-	      var changeVideo = this.props.changeVideo;
 	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_mplayer2.default, {
-	          currentVid: currentVid,
-	          updateCurrentVid: updateCurrentVid }),
+	        _react2.default.createElement(_reactYoutube2.default, {
+	          playVid: playVid,
+	          videoId: activeVid,
+	          opts: opts,
+	          onReady: function onReady(event) {
+	            return playVid(event);
+	          },
+	          onEnd: function onEnd(event) {
+	            return updateCurrentVid(event);
+	          } }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'playlist-wrapper' },
@@ -27157,115 +27176,7 @@
 	exports.default = Playlist;
 
 /***/ }),
-/* 243 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(37);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _reactRouter = __webpack_require__(184);
-	
-	var _reactYoutube = __webpack_require__(244);
-	
-	var _reactYoutube2 = _interopRequireDefault(_reactYoutube);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	// import basic playlist from a js object file
-	// pass it down to the playlist
-	// pass down a function to change videos with an onclick handler
-	
-	var MPlayer = function (_React$Component) {
-	  _inherits(MPlayer, _React$Component);
-	
-	  function MPlayer(props) {
-	    _classCallCheck(this, MPlayer);
-	
-	    var _this = _possibleConstructorReturn(this, (MPlayer.__proto__ || Object.getPrototypeOf(MPlayer)).call(this, props));
-	
-	    _this.state = {
-	      currentVid: _this.props.currentVid
-	    };
-	    _this.changeVideo = _this.changeVideo.bind(_this);
-	    _this.playVid = _this.playVid.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(MPlayer, [{
-	    key: 'changeVideo',
-	    value: function changeVideo(videoId) {
-	      this.setState({
-	        currentVid: videoId
-	      });
-	    }
-	  }, {
-	    key: 'componentWillUpdate',
-	    value: function componentWillUpdate(nextProps) {
-	      this.setState({
-	        currentVid: nextProps.currentVid
-	      });
-	    }
-	  }, {
-	    key: 'playVid',
-	    value: function playVid(event) {
-	      {} /* autoplay */
-	      //  console.log(event.target);
-	      event.target.playVideo();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var activeVid = this.state.currentVid;
-	      var changeVideo = this.changeVideo;
-	      var playVid = this.playVid;
-	      var updateCurrentVid = this.props.updateCurrentVid;
-	
-	      var opts = {
-	        height: '390',
-	        width: '640' };
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_reactYoutube2.default, {
-	          playVid: playVid,
-	          videoId: activeVid,
-	          opts: opts,
-	          onReady: function onReady(event) {
-	            return playVid(event);
-	          },
-	          onEnd: function onEnd(event) {
-	            return updateCurrentVid(event);
-	          }
-	        })
-	      );
-	    }
-	  }]);
-	
-	  return MPlayer;
-	}(_react2.default.Component);
-	
-	exports.default = MPlayer;
-
-/***/ }),
+/* 243 */,
 /* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 

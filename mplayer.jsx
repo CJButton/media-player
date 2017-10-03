@@ -32,12 +32,6 @@ export default class MPlayer extends React.Component {
       });
     }
 
-    playVid(event) {
-      {/* autoplay */}
-    //  console.log(event.target);
-     event.target.playVideo();
-    }
-
     render() {
       let activeVid = this.state.currentVid;
       const changeVideo = this.changeVideo;

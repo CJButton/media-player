@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 
-import MPlayer from './mplayer';
+import YouTube from 'react-youtube';
 
 export default class Playlist extends React.Component {
     constructor(props) {
@@ -18,6 +18,7 @@ export default class Playlist extends React.Component {
         currentVid: 1
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
+      this.playVid = this.playVid.bind(this);
     }
 
     updateCurrentVid() {
@@ -29,19 +30,32 @@ export default class Playlist extends React.Component {
       });
     }
 
+    playVid(event) {
+      {/* autoplay */}
+     console.log(event.target);
+     event.target.playVideo();
+    }
+
 
     render() {
-      let vids = this.state.videos;
-      let currentVid = this.state.videos[this.state.currentVid].videoId;
+      const opts = {
+        height: '390',
+        width: '640'};
 
+      let vids = this.state.videos;
+      let activeVid = vids[this.state.currentVid].videoId;
+
+      const playVid = this.playVid;
       const updateCurrentVid = this.updateCurrentVid;
-      const changeVideo = this.props.changeVideo;
 
       return(
         <div>
-          <MPlayer
-            currentVid={currentVid}
-            updateCurrentVid={updateCurrentVid}/>
+          <YouTube
+            playVid={playVid}
+            videoId={activeVid}
+            opts={opts}
+            onReady={(event) => playVid(event)}
+            onEnd={(event) => updateCurrentVid(event)}/>
           <div className='playlist-wrapper'>
             {vids.map((vid, i) => {
               return(
