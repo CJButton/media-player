@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
-import Main from './test';
+import Playlist from './playlist';
 
 var App = React.createClass({
   render: function () {
@@ -18,7 +18,7 @@ var App = React.createClass({
 
 const routes = (
   <Route path="/" component={App}>
-    <IndexRoute component={Main}/>
+    <IndexRoute component={Playlist}/>
   </Route>
 )
 
