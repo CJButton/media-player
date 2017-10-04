@@ -27,7 +27,7 @@ export default class Playlist extends React.Component {
         ],
         currentVid: 0,
         autoplay: false,
-        fakeState: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
+        fakeState: ['Item 6', 'Item 1', 'Item 4', 'Item 3', 'Item 2', 'Item 5'],
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
       this.playVid = this.playVid.bind(this);
@@ -106,14 +106,16 @@ export default class Playlist extends React.Component {
     }
 
     onSortEnd({oldIndex, newIndex}) {
+      console.log('in onsortend');
       let items = this.state.fakeState;
 
       this.setState({
-         items: arrayMove(items, oldIndex, newIndex),
+         fakeState: arrayMove(items, oldIndex, newIndex),
        });
      };
 
     render() {
+      console.log(this.state.fakeState);
       let items = this.state.fakeState;
 
       const DragHandle = SortableHandle(() => <span>::</span>);
@@ -124,7 +126,7 @@ export default class Playlist extends React.Component {
         return (
           <ul>
             {items.map((value, index) => (
-              <SortableItem key={`item-${index}`} index={index} value={value} />
+              <SortableItem key={index} index={index} value={value} />
             ))}
           </ul>
         );
@@ -152,7 +154,9 @@ export default class Playlist extends React.Component {
       return(
         <div>
 
-          <SortableList items={this.state.fakeState} onSortEnd={onSortEnd} />
+          <div className='sortable-list-wrapper'>
+            <SortableList items={this.state.fakeState} onSortEnd={onSortEnd} />
+          </div>
 
           <YouTube
             videoId={activeVid}

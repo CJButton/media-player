@@ -27108,7 +27108,7 @@
 	        videoId: '9cNUg3XvVKk' }],
 	      currentVid: 0,
 	      autoplay: false,
-	      fakeState: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6']
+	      fakeState: ['Item 6', 'Item 1', 'Item 4', 'Item 3', 'Item 2', 'Item 5']
 	    };
 	    _this.updateCurrentVid = _this.updateCurrentVid.bind(_this);
 	    _this.playVid = _this.playVid.bind(_this);
@@ -27202,15 +27202,17 @@
 	      var oldIndex = _ref.oldIndex,
 	          newIndex = _ref.newIndex;
 	
+	      console.log('in onsortend');
 	      var items = this.state.fakeState;
 	
 	      this.setState({
-	        items: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex)
+	        fakeState: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex)
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.state.fakeState);
 	      var items = this.state.fakeState;
 	
 	      var DragHandle = (0, _reactSortableHoc.SortableHandle)(function () {
@@ -27237,7 +27239,7 @@
 	          'ul',
 	          null,
 	          items.map(function (value, index) {
-	            return _react2.default.createElement(SortableItem, { key: 'item-' + index, index: index, value: value });
+	            return _react2.default.createElement(SortableItem, { key: index, index: index, value: value });
 	          })
 	        );
 	      });
@@ -27263,7 +27265,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(SortableList, { items: this.state.fakeState, onSortEnd: onSortEnd }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'sortable-list-wrapper' },
+	          _react2.default.createElement(SortableList, { items: this.state.fakeState, onSortEnd: onSortEnd })
+	        ),
 	        _react2.default.createElement(_reactYoutube2.default, {
 	          videoId: activeVid,
 	          opts: opts,

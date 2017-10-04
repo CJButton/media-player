@@ -14,3 +14,8 @@ html {
 .playlist-el {
   margin: 1em;
 }
+
+.sortable-list-wrapper {
+  border: black solid 1px;
+  background-color: white;
+}
