@@ -2,6 +2,10 @@
 
 
 module.exports = {
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/CJButton/media-player"
+  },
   context: __dirname,
   entry: "./main.jsx",
   output: {
@@ -11,7 +15,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: [/\.jsx?$/, /\.css/],
         exclude: /node_modules/,
         loader: 'babel',
         query: {

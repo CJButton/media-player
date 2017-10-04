@@ -1,4 +1,16 @@
 
-#root {
+html {
+  height: 100%;
   background-color: grey;
+}
+
+.playlist-wrapper {
+  width: 300px;
+  height: 200px;
+  border: black solid 1px;
+  overflow: hidden;
+}
+
+.playlist-el {
+  margin: 1em;
 }
