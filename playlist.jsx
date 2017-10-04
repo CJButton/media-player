@@ -3,6 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 
+import { SortableContainer,
+         SortableElement,
+         SortableHandle,
+         arrayMove } from 'react-sortable-hoc';
 import { Button } from 'react-bootstrap';
 
 import YouTube from 'react-youtube';
@@ -22,7 +26,8 @@ export default class Playlist extends React.Component {
            videoId: '9cNUg3XvVKk'},
         ],
         currentVid: 0,
-        autoplay: false
+        autoplay: false,
+        fakeState: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
       this.playVid = this.playVid.bind(this);
@@ -31,6 +36,7 @@ export default class Playlist extends React.Component {
       this.shuffle = this.shuffle.bind(this);
       this.autoplay = this.autoplay.bind(this);
       this.controls = this.controls.bind(this);
+      this.onSortEnd = this.onSortEnd.bind(this);
     }
 
     updateCurrentVid() {
@@ -74,7 +80,7 @@ export default class Playlist extends React.Component {
     }
 
     shuffle() {
-      {/* should shuffle update current video or start after finishing */}
+      {/* ???should shuffle update current video or start after finishing??? */}
       {/* Sattolo Algorithm */}
       let items = this.state.videos;
       for(let i = items.length - 1; i > 0; i -= 1 ) {
@@ -99,7 +105,31 @@ export default class Playlist extends React.Component {
       });
     }
 
+    onSortEnd({oldIndex, newIndex}) {
+      let items = this.state.fakeState;
+
+      this.setState({
+         items: arrayMove(items, oldIndex, newIndex),
+       });
+     };
+
     render() {
+      let items = this.state.fakeState;
+
+      const DragHandle = SortableHandle(() => <span>::</span>);
+
+      const SortableItem = SortableElement(({value}) => <li>{value}</li>);
+
+      const SortableList = SortableContainer(({items}) => {
+        return (
+          <ul>
+            {items.map((value, index) => (
+              <SortableItem key={`item-${index}`} index={index} value={value} />
+            ))}
+          </ul>
+        );
+      });
+
       const opts = {
         height: '390',
         width: '640'};
@@ -115,11 +145,15 @@ export default class Playlist extends React.Component {
         changeVideo,
         autoplay,
         shuffle,
-        controls
+        controls,
+        onSortEnd
       } = this;
 
       return(
         <div>
+
+          <SortableList items={this.state.fakeState} onSortEnd={onSortEnd} />
+
           <YouTube
             videoId={activeVid}
             opts={opts}
