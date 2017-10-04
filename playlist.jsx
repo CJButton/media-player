@@ -157,10 +157,8 @@ export default class Playlist extends React.Component {
         );
       });
 
-      const opts = {
-        height: '390',
-        width: '640'};
-
+      const opts = { height: '390' };
+        // width: '640'
       let vids = this.state.videos;
       let vidId = this.state.vidId;
       let activeVid = vids[this.state.currentVid].videoId;
@@ -179,22 +177,23 @@ export default class Playlist extends React.Component {
       return(
         <div>
           {/* Player */}
-          <Col xs={12} sm={7}>
+          <Col xs={12} md={7}>
           <div>
               <h3>
                 Currently Playing: {title}
               </h3>
-              <YouTube
-                videoId={activeVid}
-                opts={opts}
-                onStateChange={(event) => stateChange(event)}
-                onReady={(event) => playVid(event)}
-                onEnd={() => updateCurrentVid()}/>
+                <div className='youtube-wrapper'>
+                  <YouTube
+                    videoId={activeVid}
+                    onStateChange={(event) => stateChange(event)}
+                    onReady={(event) => playVid(event)}
+                    onEnd={() => updateCurrentVid()}/>
+                </div>
           </div>
           </Col>
 
           {/* Playlist */}
-          <Col xs={12} sm={5}>
+          <Col xs={7} md={4}>
           <div className='playlist-wrapper'>
             <Col xs={5}>
               <h4>
@@ -213,34 +212,37 @@ export default class Playlist extends React.Component {
                 lockAxis={'y'} />
             </Col>
             </div>
-          <div>
-            <Button
-              onClick={() => shuffle()}>
-              SHUFFLE
-            </Button>
-            <Button
-              onClick={() => autoplay()}>
-              AUTOPLAY
-            </Button>
-            <Button
-              onClick={() => controls('prev')}>
-              PREVIOUS
-            </Button>
-            <Button
-              onClick={() => controls('next')}>
-              NEXT
-            </Button>
-          </div>
-          <form>
-            <FormControl
-               id="formControlsText"
-               type="text"
-               label="Text"
-               placeholder="Add a YouTube URL" />
-            <Button type="submit">
-              SUBMIT
-            </Button>
-          </form>
+            <div>
+              <div>
+                <Button
+                  onClick={() => shuffle()}>
+                  SHUFFLE
+                </Button>
+                <Button
+                  onClick={() => autoplay()}>
+                  AUTOPLAY
+                </Button>
+                <Button
+                  onClick={() => controls('prev')}>
+                  PREVIOUS
+                </Button>
+                <Button
+                  onClick={() => controls('next')}>
+                  NEXT
+                </Button>
+              </div>
+              <form>
+                <FormControl
+                  id="formControlsText"
+                  type="text"
+                  label="Text"
+                  placeholder="Add a YouTube URL" />
+                <Button type="submit">
+                  SUBMIT
+                </Button>
+              </form>
+
+            </div>
       </Col>
       </div>
     )

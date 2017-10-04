@@ -27272,10 +27272,8 @@
 	        );
 	      });
 	
-	      var opts = {
-	        height: '390',
-	        width: '640' };
-	
+	      var opts = { height: '390' };
+	      // width: '640'
 	      var vids = this.state.videos;
 	      var vidId = this.state.vidId;
 	      var activeVid = vids[this.state.currentVid].videoId;
@@ -27295,7 +27293,7 @@
 	        null,
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
-	          { xs: 12, sm: 7 },
+	          { xs: 12, md: 7 },
 	          _react2.default.createElement(
 	            'div',
 	            null,
@@ -27305,23 +27303,26 @@
 	              'Currently Playing: ',
 	              title
 	            ),
-	            _react2.default.createElement(_reactYoutube2.default, {
-	              videoId: activeVid,
-	              opts: opts,
-	              onStateChange: function onStateChange(event) {
-	                return stateChange(event);
-	              },
-	              onReady: function onReady(event) {
-	                return playVid(event);
-	              },
-	              onEnd: function onEnd() {
-	                return updateCurrentVid();
-	              } })
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'youtube-wrapper' },
+	              _react2.default.createElement(_reactYoutube2.default, {
+	                videoId: activeVid,
+	                onStateChange: function onStateChange(event) {
+	                  return stateChange(event);
+	                },
+	                onReady: function onReady(event) {
+	                  return playVid(event);
+	                },
+	                onEnd: function onEnd() {
+	                  return updateCurrentVid();
+	                } })
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
-	          { xs: 12, sm: 5 },
+	          { xs: 7, md: 4 },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'playlist-wrapper' },
@@ -27356,50 +27357,54 @@
 	            'div',
 	            null,
 	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              {
-	                onClick: function onClick() {
-	                  return shuffle();
-	                } },
-	              'SHUFFLE'
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                {
+	                  onClick: function onClick() {
+	                    return shuffle();
+	                  } },
+	                'SHUFFLE'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                {
+	                  onClick: function onClick() {
+	                    return autoplay();
+	                  } },
+	                'AUTOPLAY'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                {
+	                  onClick: function onClick() {
+	                    return controls('prev');
+	                  } },
+	                'PREVIOUS'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                {
+	                  onClick: function onClick() {
+	                    return controls('next');
+	                  } },
+	                'NEXT'
+	              )
 	            ),
 	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              {
-	                onClick: function onClick() {
-	                  return autoplay();
-	                } },
-	              'AUTOPLAY'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              {
-	                onClick: function onClick() {
-	                  return controls('prev');
-	                } },
-	              'PREVIOUS'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              {
-	                onClick: function onClick() {
-	                  return controls('next');
-	                } },
-	              'NEXT'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'form',
-	            null,
-	            _react2.default.createElement(_reactBootstrap.FormControl, {
-	              id: 'formControlsText',
-	              type: 'text',
-	              label: 'Text',
-	              placeholder: 'Add a YouTube URL' }),
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { type: 'submit' },
-	              'SUBMIT'
+	              'form',
+	              null,
+	              _react2.default.createElement(_reactBootstrap.FormControl, {
+	                id: 'formControlsText',
+	                type: 'text',
+	                label: 'Text',
+	                placeholder: 'Add a YouTube URL' }),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { type: 'submit' },
+	                'SUBMIT'
+	              )
 	            )
 	          )
 	        )

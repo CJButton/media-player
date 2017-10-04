@@ -21,6 +21,10 @@ html, body {
   overflow: hidden;
 }
 
+.youtube-wrapper {
+  text-align: center;
+}
+
 .playlist-el {
   margin: 1em;
   border-radius: 2px;
