@@ -87,9 +87,9 @@ export default class Playlist extends React.Component {
 
       {/* Sattolo Algorithm */}
       let items = this.state.videos
-      // let items = [1, 2, 3, 4];
-      for(let i = items.length - 1; i > 0; i -= 0 ) {
-        let j = Math.floor(Math.random() * (i + 1));
+      // let items = [1, 2, 3, 4, 5];
+      for(let i = items.length - 1; i > 0; i -= 1 ) {
+        let j = Math.floor(Math.random() * (i));
         let tmp = items[i];
         items[i] = items[j];
         items[j] = tmp;
