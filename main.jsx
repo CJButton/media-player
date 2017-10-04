@@ -4,13 +4,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
+import { Grid } from 'react-bootstrap';
+
 import Playlist from './playlist';
 
 var App = React.createClass({
   render: function () {
     return(
-      <div>
-        {this.props.children}
+      <div className='app-wrapper'>
+        <Grid id='grid'>
+          {this.props.children}
+        </Grid>
       </div>
     );
   }

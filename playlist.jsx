@@ -7,7 +7,10 @@ import { SortableContainer,
          SortableElement,
          SortableHandle,
          arrayMove } from 'react-sortable-hoc';
-import { Button } from 'react-bootstrap';
+import { Button,
+         FormControl,
+         Grid,
+         Col } from 'react-bootstrap';
 
 import YouTube from 'react-youtube';
 
@@ -20,8 +23,8 @@ export default class Playlist extends React.Component {
            videoId: 'kWKlmbTudD8'},
           {title: "the rising e1",
            videoId: 'A8NaIt6eFCk'},
-          {title: "Funhaus",
-           videoId: 'lq_Nf2W86AM'},
+          {title: "Robbaz Here",
+           videoId: 'dmkpuK6ImWI'},
           {title: "BotW Sequels",
            videoId: '9cNUg3XvVKk'},
         ],
@@ -36,6 +39,7 @@ export default class Playlist extends React.Component {
       this.autoplay = this.autoplay.bind(this);
       this.controls = this.controls.bind(this);
       this.onSortEnd = this.onSortEnd.bind(this);
+      this.addVideo = this.addVideo.bind(this);
     }
 
     updateCurrentVid() {
@@ -109,10 +113,15 @@ export default class Playlist extends React.Component {
       if (oldIndex === newIndex) return this.changeVideo(newIndex);
       let items = this.state.videos;
 
+      {/* Allows for click and drag */}
       this.setState({
          videos: arrayMove(items, oldIndex, newIndex),
        });
      };
+
+     addVideo(e) {
+       console.log(e.target.value);
+     }
 
     render() {
       let items = this.state.videos;
@@ -151,6 +160,7 @@ export default class Playlist extends React.Component {
       let vids = this.state.videos;
       let vidId = this.state.vidId;
       let activeVid = vids[this.state.currentVid].videoId;
+      let title = vids[this.state.currentVid].title;
 
       const {
         playVid,
@@ -162,42 +172,62 @@ export default class Playlist extends React.Component {
         controls,
         onSortEnd
       } = this;
-
+// opts={opts}
       return(
         <div>
+          {/* Player */}
+          <Col sm={8}>
+          <div>
+              <h3>
+                Currently Playing: {title}
+              </h3>
+              <YouTube
+                videoId={activeVid}
+                onStateChange={(event) => stateChange(event)}
+                onReady={(event) => playVid(event)}
+                onEnd={() => updateCurrentVid()}/>
+          </div>
+          </Col>
 
+          {/* Playlist */}
+          <Col sm={4}>
           <div className='playlist-wrapper'>
+
             <SortableList
               items={this.state.videos}
               onSortEnd={onSortEnd}
               lockAxis={'y'} />
-          </div>
           <div>
             <Button
               onClick={() => shuffle()}>
-              Shuffle
+              SHUFFLE
             </Button>
             <Button
               onClick={() => autoplay()}>
-              Autoplay
+              AUTOPLAY
             </Button>
             <Button
               onClick={() => controls('prev')}>
-              Previous
+              PREVIOUS
             </Button>
             <Button
               onClick={() => controls('next')}>
-              Next
+              NEXT
             </Button>
           </div>
-
-          <YouTube
-            videoId={activeVid}
-            opts={opts}
-            onStateChange={(event) => stateChange(event)}
-            onReady={(event) => playVid(event)}
-            onEnd={() => updateCurrentVid()}/>
+          <form>
+            <FormControl
+               id="formControlsText"
+               type="text"
+               label="Text"
+               placeholder="Add a YouTube URL" />
+            <Button type="submit">
+              SUBMIT
+            </Button>
+          </form>
         </div>
-      )
-    }
+      </Col>
+      </div>
+    )
+  }
 }
