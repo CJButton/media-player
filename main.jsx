@@ -12,7 +12,7 @@ var App = React.createClass({
   render: function () {
     return(
       <div className='app-wrapper'>
-        <Grid id='grid'>
+        <Grid id='grid' fluid>
           {this.props.children}
         </Grid>
       </div>

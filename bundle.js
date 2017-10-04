@@ -73,7 +73,7 @@
 	      { className: 'app-wrapper' },
 	      _react2.default.createElement(
 	        _reactBootstrap.Grid,
-	        { id: 'grid' },
+	        { id: 'grid', fluid: true },
 	        this.props.children
 	      )
 	    );

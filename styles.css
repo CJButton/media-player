@@ -2,16 +2,12 @@
 html, body {
   min-height: 100vh;
   height:100%;
+  background-color: #141414;
 }
 
 #root {
   min-height: 100vh;
   height: 100%;
-}
-
-#grid {
-  height: 100%;
-  width: 100%;
 }
 
 .app-wrapper {
