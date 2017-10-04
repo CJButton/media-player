@@ -12,13 +12,17 @@ export default class Playlist extends React.Component {
       super(props);
       this.state = {
         videos: [
-          {title: 'Best of the Worst: The Sweeper, Empire of the Dark, and Mad Foxes',
+          {title: '1',
            videoId: 'kWKlmbTudD8'},
-          {title: "Bumbling Through The Ring: Terror's Realm p.1",
+          {title: "2",
            videoId: 'A8NaIt6eFCk'},
+          {title: "3",
+           videoId: 'lq_Nf2W86AM'},
+          {title: "4",
+           videoId: '9cNUg3XvVKk'},
         ],
-        currentVid: 1,
-        autoplay: true
+        currentVid: 0,
+        autoplay: false
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
       this.playVid = this.playVid.bind(this);
@@ -38,7 +42,7 @@ export default class Playlist extends React.Component {
     }
 
     playVid(event) {
-     event.target.playVideo();
+    //  event.target.playVideo();
     }
 
     stateChange(event) {
@@ -70,6 +74,38 @@ export default class Playlist extends React.Component {
 
     shuffle() {
       // keep complexity down to a O(n)
+      // const playLength = this.state.videos.length;
+      // let shuffledVids = [];
+      // let videoInts = [];
+      // for (var i = 0; i <= playLength - 1; i++) {videoInts.push(i);}
+      // how to prevent a video from being in the same spot after shuffling?
+      // while (videoInts.length > 0) {
+      //   let randNum = Math.floor(Math.random() * videoInts.length);
+      //   shuffledVids.push(this.state.videos[randNum]);
+      //   videoInts.splice(randNum, 1);
+      // }
+
+      {/* Sattolo Algorithm */}
+      let items = this.state.videos
+      // let items = [1, 2, 3, 4];
+      for(let i = items.length - 1; i > 0; i -= 0 ) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let tmp = items[i];
+        items[i] = items[j];
+        items[j] = tmp;
+      }
+
+      // console.log(items);
+
+      // need a function to check the values are not identical
+      // if (shuffledVids === this.state.videos) {
+      //   this.shuffle();
+      // }
+      //
+      this.setState({
+        videos: items
+      });
+
     }
 
     render() {

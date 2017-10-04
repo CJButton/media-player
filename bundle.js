@@ -27099,11 +27099,13 @@
 	    var _this = _possibleConstructorReturn(this, (Playlist.__proto__ || Object.getPrototypeOf(Playlist)).call(this, props));
 	
 	    _this.state = {
-	      videos: [{ title: 'Best of the Worst: The Sweeper, Empire of the Dark, and Mad Foxes',
-	        videoId: 'kWKlmbTudD8' }, { title: "Bumbling Through The Ring: Terror's Realm p.1",
-	        videoId: 'A8NaIt6eFCk' }],
-	      currentVid: 1,
-	      autoplay: true
+	      videos: [{ title: '1',
+	        videoId: 'kWKlmbTudD8' }, { title: "2",
+	        videoId: 'A8NaIt6eFCk' }, { title: "3",
+	        videoId: 'lq_Nf2W86AM' }, { title: "4",
+	        videoId: '9cNUg3XvVKk' }],
+	      currentVid: 0,
+	      autoplay: false
 	    };
 	    _this.updateCurrentVid = _this.updateCurrentVid.bind(_this);
 	    _this.playVid = _this.playVid.bind(_this);
@@ -27127,7 +27129,7 @@
 	  }, {
 	    key: 'playVid',
 	    value: function playVid(event) {
-	      event.target.playVideo();
+	      //  event.target.playVideo();
 	    }
 	  }, {
 	    key: 'stateChange',
@@ -27163,6 +27165,37 @@
 	    key: 'shuffle',
 	    value: function shuffle() {
 	      // keep complexity down to a O(n)
+	      // const playLength = this.state.videos.length;
+	      // let shuffledVids = [];
+	      // let videoInts = [];
+	      // for (var i = 0; i <= playLength - 1; i++) {videoInts.push(i);}
+	      // how to prevent a video from being in the same spot after shuffling?
+	      // while (videoInts.length > 0) {
+	      //   let randNum = Math.floor(Math.random() * videoInts.length);
+	      //   shuffledVids.push(this.state.videos[randNum]);
+	      //   videoInts.splice(randNum, 1);
+	      // }
+	
+	      {/* Sattolo Algorithm */}
+	      var items = this.state.videos;
+	      // let items = [1, 2, 3, 4];
+	      for (var i = items.length - 1; i > 0; i -= 0) {
+	        var j = Math.floor(Math.random() * (i + 1));
+	        var tmp = items[i];
+	        items[i] = items[j];
+	        items[j] = tmp;
+	      }
+	
+	      // console.log(items);
+	
+	      // need a function to check the values are not identical
+	      // if (shuffledVids === this.state.videos) {
+	      //   this.shuffle();
+	      // }
+	      //
+	      this.setState({
+	        videos: items
+	      });
 	    }
 	  }, {
 	    key: 'render',
