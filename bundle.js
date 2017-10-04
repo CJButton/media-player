@@ -27107,8 +27107,7 @@
 	        videoId: 'lq_Nf2W86AM' }, { title: "BotW Sequels",
 	        videoId: '9cNUg3XvVKk' }],
 	      currentVid: 0,
-	      autoplay: false,
-	      fakeState: ['Item 6', 'Item 1', 'Item 4', 'Item 3', 'Item 2', 'Item 5']
+	      autoplay: false
 	    };
 	    _this.updateCurrentVid = _this.updateCurrentVid.bind(_this);
 	    _this.playVid = _this.playVid.bind(_this);
@@ -27153,7 +27152,7 @@
 	    }
 	  }, {
 	    key: 'changeVideo',
-	    value: function changeVideo(vid, i) {
+	    value: function changeVideo(i) {
 	      this.setState({
 	        currentVid: i
 	      });
@@ -27202,18 +27201,20 @@
 	      var oldIndex = _ref.oldIndex,
 	          newIndex = _ref.newIndex;
 	
-	      console.log('in onsortend');
-	      var items = this.state.fakeState;
+	      {/* Allows for onClick */}
+	      if (oldIndex === newIndex) return this.changeVideo(newIndex);
+	      var items = this.state.videos;
 	
 	      this.setState({
-	        fakeState: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex)
+	        videos: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex)
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.state.fakeState);
-	      var items = this.state.fakeState;
+	      var _this2 = this;
+	
+	      var items = this.state.videos;
 	
 	      var DragHandle = (0, _reactSortableHoc.SortableHandle)(function () {
 	        return _react2.default.createElement(
@@ -27225,21 +27226,28 @@
 	
 	      var SortableItem = (0, _reactSortableHoc.SortableElement)(function (_ref2) {
 	        var value = _ref2.value;
+	
 	        return _react2.default.createElement(
-	          'li',
-	          null,
-	          value
+	          'div',
+	          {
+	            className: 'playlist-el' },
+	          value.title
 	        );
 	      });
 	
 	      var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref3) {
 	        var items = _ref3.items;
 	
+	        var vids = _this2.state.videos;
 	        return _react2.default.createElement(
-	          'ul',
+	          'div',
 	          null,
-	          items.map(function (value, index) {
-	            return _react2.default.createElement(SortableItem, { key: index, index: index, value: value });
+	          Object.keys(items).map(function (value, index) {
+	            return _react2.default.createElement(SortableItem, {
+	              key: index,
+	              index: index,
+	              value: vids[value],
+	              className: 'playlist-el' });
 	          })
 	        );
 	      });
@@ -27267,36 +27275,11 @@
 	        null,
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'sortable-list-wrapper' },
-	          _react2.default.createElement(SortableList, { items: this.state.fakeState, onSortEnd: onSortEnd })
-	        ),
-	        _react2.default.createElement(_reactYoutube2.default, {
-	          videoId: activeVid,
-	          opts: opts,
-	          onStateChange: function onStateChange(event) {
-	            return stateChange(event);
-	          },
-	          onReady: function onReady(event) {
-	            return playVid(event);
-	          },
-	          onEnd: function onEnd() {
-	            return updateCurrentVid();
-	          } }),
-	        _react2.default.createElement(
-	          'div',
 	          { className: 'playlist-wrapper' },
-	          vids.map(function (vid, i) {
-	            return _react2.default.createElement(
-	              'div',
-	              {
-	                key: i,
-	                className: 'playlist-el',
-	                onClick: function onClick() {
-	                  return changeVideo(vid, i);
-	                } },
-	              vid.title
-	            );
-	          })
+	          _react2.default.createElement(SortableList, {
+	            items: this.state.videos,
+	            onSortEnd: onSortEnd,
+	            lockAxis: 'y' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -27333,7 +27316,19 @@
 	              } },
 	            'Next'
 	          )
-	        )
+	        ),
+	        _react2.default.createElement(_reactYoutube2.default, {
+	          videoId: activeVid,
+	          opts: opts,
+	          onStateChange: function onStateChange(event) {
+	            return stateChange(event);
+	          },
+	          onReady: function onReady(event) {
+	            return playVid(event);
+	          },
+	          onEnd: function onEnd() {
+	            return updateCurrentVid();
+	          } })
 	      );
 	    }
 	  }]);

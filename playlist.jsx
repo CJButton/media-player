@@ -26,8 +26,7 @@ export default class Playlist extends React.Component {
            videoId: '9cNUg3XvVKk'},
         ],
         currentVid: 0,
-        autoplay: false,
-        fakeState: ['Item 6', 'Item 1', 'Item 4', 'Item 3', 'Item 2', 'Item 5'],
+        autoplay: false
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
       this.playVid = this.playVid.bind(this);
@@ -66,7 +65,7 @@ export default class Playlist extends React.Component {
       }
     }
 
-    changeVideo(vid, i) {
+    changeVideo(i) {
       this.setState({
         currentVid: i
       });
@@ -106,29 +105,42 @@ export default class Playlist extends React.Component {
     }
 
     onSortEnd({oldIndex, newIndex}) {
-      console.log('in onsortend');
-      let items = this.state.fakeState;
+      {/* Allows for onClick */}
+      if (oldIndex === newIndex) return this.changeVideo(newIndex);
+      let items = this.state.videos;
 
       this.setState({
-         fakeState: arrayMove(items, oldIndex, newIndex),
+         videos: arrayMove(items, oldIndex, newIndex),
        });
      };
 
     render() {
-      console.log(this.state.fakeState);
-      let items = this.state.fakeState;
+      let items = this.state.videos;
 
       const DragHandle = SortableHandle(() => <span>::</span>);
 
-      const SortableItem = SortableElement(({value}) => <li>{value}</li>);
+      const SortableItem = SortableElement(({value}) => {
+        return(
+          <div
+            className='playlist-el'>
+            {value.title}
+          </div>
+        );
+       }
+      );
 
       const SortableList = SortableContainer(({items}) => {
+        let vids = this.state.videos;
         return (
-          <ul>
-            {items.map((value, index) => (
-              <SortableItem key={index} index={index} value={value} />
+          <div>
+            {Object.keys(items).map((value, index) => (
+              <SortableItem
+                key={index}
+                index={index}
+                value={vids[value]}
+                className='playlist-el' />
             ))}
-          </ul>
+          </div>
         );
       });
 
@@ -154,27 +166,11 @@ export default class Playlist extends React.Component {
       return(
         <div>
 
-          <div className='sortable-list-wrapper'>
-            <SortableList items={this.state.fakeState} onSortEnd={onSortEnd} />
-          </div>
-
-          <YouTube
-            videoId={activeVid}
-            opts={opts}
-            onStateChange={(event) => stateChange(event)}
-            onReady={(event) => playVid(event)}
-            onEnd={() => updateCurrentVid()}/>
           <div className='playlist-wrapper'>
-            {vids.map((vid, i) => {
-              return(
-                <div
-                  key={i}
-                  className='playlist-el'
-                  onClick={() => changeVideo(vid, i)}>
-                  {vid.title}
-                </div>
-              )
-            })}
+            <SortableList
+              items={this.state.videos}
+              onSortEnd={onSortEnd}
+              lockAxis={'y'} />
           </div>
           <div>
             <Button
@@ -194,6 +190,13 @@ export default class Playlist extends React.Component {
               Next
             </Button>
           </div>
+
+          <YouTube
+            videoId={activeVid}
+            opts={opts}
+            onStateChange={(event) => stateChange(event)}
+            onReady={(event) => playVid(event)}
+            onEnd={() => updateCurrentVid()}/>
         </div>
       )
     }
