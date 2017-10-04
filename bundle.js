@@ -27099,10 +27099,10 @@
 	    var _this = _possibleConstructorReturn(this, (Playlist.__proto__ || Object.getPrototypeOf(Playlist)).call(this, props));
 	
 	    _this.state = {
-	      videos: [{ title: '1',
-	        videoId: 'kWKlmbTudD8' }, { title: "2",
-	        videoId: 'A8NaIt6eFCk' }, { title: "3",
-	        videoId: 'lq_Nf2W86AM' }, { title: "4",
+	      videos: [{ title: 'Best of the Worst: The Sweeper',
+	        videoId: 'kWKlmbTudD8' }, { title: "the rising e1",
+	        videoId: 'A8NaIt6eFCk' }, { title: "Funhaus",
+	        videoId: 'lq_Nf2W86AM' }, { title: "BotW Sequels",
 	        videoId: '9cNUg3XvVKk' }],
 	      currentVid: 0,
 	      autoplay: false
@@ -27113,6 +27113,7 @@
 	    _this.changeVideo = _this.changeVideo.bind(_this);
 	    _this.shuffle = _this.shuffle.bind(_this);
 	    _this.autoplay = _this.autoplay.bind(_this);
+	    _this.controls = _this.controls.bind(_this);
 	    return _this;
 	  }
 	
@@ -27164,37 +27165,31 @@
 	  }, {
 	    key: 'shuffle',
 	    value: function shuffle() {
-	      // keep complexity down to a O(n)
-	      // const playLength = this.state.videos.length;
-	      // let shuffledVids = [];
-	      // let videoInts = [];
-	      // for (var i = 0; i <= playLength - 1; i++) {videoInts.push(i);}
-	      // how to prevent a video from being in the same spot after shuffling?
-	      // while (videoInts.length > 0) {
-	      //   let randNum = Math.floor(Math.random() * videoInts.length);
-	      //   shuffledVids.push(this.state.videos[randNum]);
-	      //   videoInts.splice(randNum, 1);
-	      // }
-	
+	      {/* should shuffle update current video or start after finishing */}
 	      {/* Sattolo Algorithm */}
 	      var items = this.state.videos;
-	      // let items = [1, 2, 3, 4, 5];
 	      for (var i = items.length - 1; i > 0; i -= 1) {
 	        var j = Math.floor(Math.random() * i);
 	        var tmp = items[i];
 	        items[i] = items[j];
 	        items[j] = tmp;
 	      }
-	
-	      // console.log(items);
-	
-	      // need a function to check the values are not identical
-	      // if (shuffledVids === this.state.videos) {
-	      //   this.shuffle();
-	      // }
-	      //
 	      this.setState({
 	        videos: items
+	      });
+	    }
+	  }, {
+	    key: 'controls',
+	    value: function controls(dir) {
+	      if (dir === 'next') {
+	        return this.updateCurrentVid();
+	      }
+	
+	      var cVid = this.state.currentVid;
+	      var vidLength = this.state.videos.length - 1;
+	      var preVid = cVid - 1 < 0 ? vidLength : cVid - 1;
+	      this.setState({
+	        currentVid: preVid
 	      });
 	    }
 	  }, {
@@ -27205,6 +27200,7 @@
 	        width: '640' };
 	
 	      var vids = this.state.videos;
+	      var vidId = this.state.vidId;
 	      var activeVid = vids[this.state.currentVid].videoId;
 	
 	      var playVid = this.playVid,
@@ -27212,7 +27208,8 @@
 	          stateChange = this.stateChange,
 	          changeVideo = this.changeVideo,
 	          autoplay = this.autoplay,
-	          shuffle = this.shuffle;
+	          shuffle = this.shuffle,
+	          controls = this.controls;
 	
 	
 	      return _react2.default.createElement(
@@ -27267,12 +27264,18 @@
 	          ),
 	          _react2.default.createElement(
 	            _reactBootstrap.Button,
-	            null,
+	            {
+	              onClick: function onClick() {
+	                return controls('prev');
+	              } },
 	            'Previous'
 	          ),
 	          _react2.default.createElement(
 	            _reactBootstrap.Button,
-	            null,
+	            {
+	              onClick: function onClick() {
+	                return controls('next');
+	              } },
 	            'Next'
 	          )
 	        )

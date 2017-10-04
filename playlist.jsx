@@ -12,13 +12,13 @@ export default class Playlist extends React.Component {
       super(props);
       this.state = {
         videos: [
-          {title: '1',
+          {title: 'Best of the Worst: The Sweeper',
            videoId: 'kWKlmbTudD8'},
-          {title: "2",
+          {title: "the rising e1",
            videoId: 'A8NaIt6eFCk'},
-          {title: "3",
+          {title: "Funhaus",
            videoId: 'lq_Nf2W86AM'},
-          {title: "4",
+          {title: "BotW Sequels",
            videoId: '9cNUg3XvVKk'},
         ],
         currentVid: 0,
@@ -30,6 +30,7 @@ export default class Playlist extends React.Component {
       this.changeVideo = this.changeVideo.bind(this);
       this.shuffle = this.shuffle.bind(this);
       this.autoplay = this.autoplay.bind(this);
+      this.controls = this.controls.bind(this);
     }
 
     updateCurrentVid() {
@@ -73,39 +74,29 @@ export default class Playlist extends React.Component {
     }
 
     shuffle() {
-      // keep complexity down to a O(n)
-      // const playLength = this.state.videos.length;
-      // let shuffledVids = [];
-      // let videoInts = [];
-      // for (var i = 0; i <= playLength - 1; i++) {videoInts.push(i);}
-      // how to prevent a video from being in the same spot after shuffling?
-      // while (videoInts.length > 0) {
-      //   let randNum = Math.floor(Math.random() * videoInts.length);
-      //   shuffledVids.push(this.state.videos[randNum]);
-      //   videoInts.splice(randNum, 1);
-      // }
-
+      {/* should shuffle update current video or start after finishing */}
       {/* Sattolo Algorithm */}
-      let items = this.state.videos
-      // let items = [1, 2, 3, 4, 5];
+      let items = this.state.videos;
       for(let i = items.length - 1; i > 0; i -= 1 ) {
         let j = Math.floor(Math.random() * (i));
         let tmp = items[i];
         items[i] = items[j];
         items[j] = tmp;
       }
-
-      // console.log(items);
-
-      // need a function to check the values are not identical
-      // if (shuffledVids === this.state.videos) {
-      //   this.shuffle();
-      // }
-      //
       this.setState({
         videos: items
       });
+    }
 
+    controls(dir) {
+      if (dir === 'next') {return this.updateCurrentVid()}
+
+      const cVid = this.state.currentVid;
+      const vidLength = this.state.videos.length - 1;
+      const preVid = (cVid - 1 < 0) ? vidLength : (cVid - 1)
+      this.setState({
+        currentVid: preVid
+      });
     }
 
     render() {
@@ -114,6 +105,7 @@ export default class Playlist extends React.Component {
         width: '640'};
 
       let vids = this.state.videos;
+      let vidId = this.state.vidId;
       let activeVid = vids[this.state.currentVid].videoId;
 
       const {
@@ -122,7 +114,8 @@ export default class Playlist extends React.Component {
         stateChange,
         changeVideo,
         autoplay,
-        shuffle
+        shuffle,
+        controls
       } = this;
 
       return(
@@ -154,10 +147,12 @@ export default class Playlist extends React.Component {
               onClick={() => autoplay()}>
               Autoplay
             </Button>
-            <Button>
+            <Button
+              onClick={() => controls('prev')}>
               Previous
             </Button>
-            <Button>
+            <Button
+              onClick={() => controls('next')}>
               Next
             </Button>
           </div>
