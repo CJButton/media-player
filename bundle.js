@@ -27113,6 +27113,7 @@
 	        videoId: 'dmkpuK6ImWI' }, { title: "BotW Sequels",
 	        videoId: '9cNUg3XvVKk' }],
 	      currentVid: 0,
+	      currentVideoId: 'kWKlmbTudD8',
 	      autoplay: false
 	    };
 	    _this.updateCurrentVid = _this.updateCurrentVid.bind(_this);
@@ -27238,12 +27239,17 @@
 	      });
 	
 	      var SortableItem = (0, _reactSortableHoc.SortableElement)(function (_ref2) {
-	        var value = _ref2.value;
+	        var idx = _ref2.idx,
+	            value = _ref2.value;
 	
+	        var color = idx % 2 === 0 ? 'grey' : 'white';
+	        if (value.videoId === _this2.state.currentVideoId) {
+	          color = 'active-vid';
+	        }
 	        return _react2.default.createElement(
 	          'div',
 	          {
-	            className: 'playlist-el' },
+	            className: 'playlist-el ' + color },
 	          value.title
 	        );
 	      });
@@ -27260,6 +27266,7 @@
 	              key: index,
 	              index: index,
 	              value: vids[value],
+	              idx: index,
 	              className: 'playlist-el' });
 	          })
 	        );
@@ -27282,14 +27289,13 @@
 	          shuffle = this.shuffle,
 	          controls = this.controls,
 	          onSortEnd = this.onSortEnd;
-	      // opts={opts}
 	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
-	          { sm: 8 },
+	          { xs: 12, sm: 7 },
 	          _react2.default.createElement(
 	            'div',
 	            null,
@@ -27301,6 +27307,7 @@
 	            ),
 	            _react2.default.createElement(_reactYoutube2.default, {
 	              videoId: activeVid,
+	              opts: opts,
 	              onStateChange: function onStateChange(event) {
 	                return stateChange(event);
 	              },
@@ -27314,63 +27321,85 @@
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
-	          { sm: 4 },
+	          { xs: 12, sm: 5 },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'playlist-wrapper' },
-	            _react2.default.createElement(SortableList, {
-	              items: this.state.videos,
-	              onSortEnd: onSortEnd,
-	              lockAxis: 'y' }),
 	            _react2.default.createElement(
-	              'div',
-	              null,
+	              _reactBootstrap.Col,
+	              { xs: 5 },
 	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                {
-	                  onClick: function onClick() {
-	                    return shuffle();
-	                  } },
-	                'SHUFFLE'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                {
-	                  onClick: function onClick() {
-	                    return autoplay();
-	                  } },
-	                'AUTOPLAY'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                {
-	                  onClick: function onClick() {
-	                    return controls('prev');
-	                  } },
-	                'PREVIOUS'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                {
-	                  onClick: function onClick() {
-	                    return controls('next');
-	                  } },
-	                'NEXT'
+	                'h4',
+	                null,
+	                'Up next'
 	              )
 	            ),
 	            _react2.default.createElement(
-	              'form',
-	              null,
-	              _react2.default.createElement(_reactBootstrap.FormControl, {
-	                id: 'formControlsText',
-	                type: 'text',
-	                label: 'Text',
-	                placeholder: 'Add a YouTube URL' }),
+	              _reactBootstrap.Col,
+	              { xs: 7 },
 	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { type: 'submit' },
-	                'SUBMIT'
+	                'h4',
+	                null,
+	                'Autoplay: Put Toggle here'
 	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 12 },
+	              _react2.default.createElement(SortableList, {
+	                items: this.state.videos,
+	                onSortEnd: onSortEnd,
+	                lockAxis: 'y' })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              {
+	                onClick: function onClick() {
+	                  return shuffle();
+	                } },
+	              'SHUFFLE'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              {
+	                onClick: function onClick() {
+	                  return autoplay();
+	                } },
+	              'AUTOPLAY'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              {
+	                onClick: function onClick() {
+	                  return controls('prev');
+	                } },
+	              'PREVIOUS'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              {
+	                onClick: function onClick() {
+	                  return controls('next');
+	                } },
+	              'NEXT'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'form',
+	            null,
+	            _react2.default.createElement(_reactBootstrap.FormControl, {
+	              id: 'formControlsText',
+	              type: 'text',
+	              label: 'Text',
+	              placeholder: 'Add a YouTube URL' }),
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { type: 'submit' },
+	              'SUBMIT'
 	            )
 	          )
 	        )

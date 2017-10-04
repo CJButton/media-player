@@ -29,6 +29,7 @@ export default class Playlist extends React.Component {
            videoId: '9cNUg3XvVKk'},
         ],
         currentVid: 0,
+        currentVideoId: 'kWKlmbTudD8',
         autoplay: false
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
@@ -128,10 +129,12 @@ export default class Playlist extends React.Component {
 
       const DragHandle = SortableHandle(() => <span>::</span>);
 
-      const SortableItem = SortableElement(({value}) => {
+      const SortableItem = SortableElement(({idx, value}) => {
+        let color = (idx % 2 === 0) ? 'grey' : 'white'
+        if (value.videoId === this.state.currentVideoId) {color = 'active-vid'}
         return(
           <div
-            className='playlist-el'>
+            className={`playlist-el ${color}`}>
             {value.title}
           </div>
         );
@@ -147,6 +150,7 @@ export default class Playlist extends React.Component {
                 key={index}
                 index={index}
                 value={vids[value]}
+                idx={index}
                 className='playlist-el' />
             ))}
           </div>
@@ -172,17 +176,17 @@ export default class Playlist extends React.Component {
         controls,
         onSortEnd
       } = this;
-// opts={opts}
       return(
         <div>
           {/* Player */}
-          <Col sm={8}>
+          <Col xs={12} sm={7}>
           <div>
               <h3>
                 Currently Playing: {title}
               </h3>
               <YouTube
                 videoId={activeVid}
+                opts={opts}
                 onStateChange={(event) => stateChange(event)}
                 onReady={(event) => playVid(event)}
                 onEnd={() => updateCurrentVid()}/>
@@ -190,13 +194,25 @@ export default class Playlist extends React.Component {
           </Col>
 
           {/* Playlist */}
-          <Col sm={4}>
+          <Col xs={12} sm={5}>
           <div className='playlist-wrapper'>
-
-            <SortableList
-              items={this.state.videos}
-              onSortEnd={onSortEnd}
-              lockAxis={'y'} />
+            <Col xs={5}>
+              <h4>
+                Up next
+              </h4>
+            </Col>
+            <Col xs={7}>
+              <h4>
+                Autoplay: Put Toggle here
+              </h4>
+            </Col>
+            <Col xs={12}>
+              <SortableList
+                items={this.state.videos}
+                onSortEnd={onSortEnd}
+                lockAxis={'y'} />
+            </Col>
+            </div>
           <div>
             <Button
               onClick={() => shuffle()}>
@@ -225,7 +241,6 @@ export default class Playlist extends React.Component {
               SUBMIT
             </Button>
           </form>
-        </div>
       </Col>
       </div>
     )

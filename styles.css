@@ -1,27 +1,38 @@
 
 html, body {
-  height: 100%;
+  min-height: 100vh;
+  height:100%;
 }
 
 #root {
+  min-height: 100vh;
   height: 100%;
 }
 
+#grid {
+  height: 100%;
+  width: 100%;
+}
+
 .app-wrapper {
+  background-color: #141414;
+  color: #E5E5E5;
   height: 100%;
 }
 
 .playlist-wrapper {
   border: black solid 1px;
-  /*overflow: hidden;*/
-}
-
-#grid {
-  width: 100%;
+  overflow: hidden;
 }
 
 .playlist-el {
   margin: 1em;
+  border-radius: 2px;
+  padding: 7px;
+}
+
+.playlist-el:hover {
+  cursor: pointer;
 }
 
 .sortable-list-wrapper {
@@ -29,7 +40,17 @@ html, body {
   background-color: white;
 }
 
-.app-wrapper {
-  background-color: #141414;
-  color: #E5E5E5;
+.grey {
+  background-color: grey;
+  color: black;
+}
+
+.white {
+  background-color: white;
+  color: black;
+}
+
+.active-vid {
+  background-color: green;
+  color: white;
 }

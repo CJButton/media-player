@@ -17,4 +17,8 @@ Creat next/prev button
 Shuffle feature - Model after iTunes shuffle ( *** explain Big O complexity *** )
 New playlist Component that allows users to add videos and drag/drop the video order, allowing for personalized playlist
 * Style should attempt to be sort of youtube-esque, night-version
+- alternating colors for playlist
+- have active color for current video
+- Add toggle npm for autoplay
+AJAX request to get video title
 Write Big O complexity for Shuffle method
