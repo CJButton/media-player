@@ -238,15 +238,17 @@ export default class Playlist extends React.Component {
                 PLAYLIST
               </h4>
             </Col>
-            <Col xs={7}>
+            <Col xs={6}>
+              <div className='autoplay-wrapper'>
                 <h4 className='title'>
                   AUTOPLAY:
-                  <Button
-                    onClick={() => this.autoplay()}
-                    id={autoplayStatus}>
-                    {autoplayStatus}
-                  </Button>
                 </h4>
+                <Button
+                  onClick={() => this.autoplay()}
+                  id={autoplayStatus}>
+                  {autoplayStatus}
+                </Button>
+              </div>
             </Col>
             <Col xs={12}>
               <SortableList

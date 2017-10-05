@@ -47339,11 +47339,15 @@
 	              ),
 	              _react2.default.createElement(
 	                _reactBootstrap.Col,
-	                { xs: 7 },
+	                { xs: 6 },
 	                _react2.default.createElement(
-	                  'h4',
-	                  { className: 'title' },
-	                  'AUTOPLAY:',
+	                  'div',
+	                  { className: 'autoplay-wrapper' },
+	                  _react2.default.createElement(
+	                    'h4',
+	                    { className: 'title' },
+	                    'AUTOPLAY:'
+	                  ),
 	                  _react2.default.createElement(
 	                    _reactBootstrap.Button,
 	                    {

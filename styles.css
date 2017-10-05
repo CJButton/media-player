@@ -33,9 +33,15 @@ html, body {
 
 .title {
   font-family: "Roboto", sans-serif;
+  margin-left: 0.9em;
+}
+
+.autoplay-wrapper {
+  display: flex;
 }
 
 .playlist-wrapper {
+  padding-top: 1em;
   border: black solid 1px;
   overflow: hidden;
 }
