@@ -27107,13 +27107,13 @@
 	    var _this = _possibleConstructorReturn(this, (Playlist.__proto__ || Object.getPrototypeOf(Playlist)).call(this, props));
 	
 	    _this.state = {
-	      videos: [{ title: 'Best of the Worst: The Sweeper',
+	      videos: [{ title: "Robbaz Here",
+	        videoId: 'dmkpuK6ImWI' }, { title: 'Best of the Worst: The Sweeper',
 	        videoId: 'kWKlmbTudD8' }, { title: "the rising e1",
-	        videoId: 'A8NaIt6eFCk' }, { title: "Robbaz Here",
-	        videoId: 'dmkpuK6ImWI' }, { title: "BotW Sequels",
+	        videoId: 'A8NaIt6eFCk' }, { title: "BotW Sequels",
 	        videoId: '9cNUg3XvVKk' }],
 	      currentVid: 0,
-	      currentVideoId: 'kWKlmbTudD8',
+	      currentVideoId: 'dmkpuK6ImWI',
 	      autoplay: false
 	    };
 	    _this.updateCurrentVid = _this.updateCurrentVid.bind(_this);
@@ -27134,8 +27134,10 @@
 	      var cVid = this.state.currentVid;
 	      var vidLength = this.state.videos.length - 1;
 	      var newVid = cVid + 1 > vidLength ? 0 : cVid += 1;
+	      var currentVideoId = this.state.videos[newVid].videoId;
 	      this.setState({
-	        currentVid: newVid
+	        currentVid: newVid,
+	        currentVideoId: currentVideoId
 	      });
 	    }
 	  }, {
@@ -27161,8 +27163,11 @@
 	  }, {
 	    key: 'changeVideo',
 	    value: function changeVideo(i) {
+	      var currentVideoId = this.state.videos[i].videoId;
+	
 	      this.setState({
-	        currentVid: i
+	        currentVid: i,
+	        currentVideoId: currentVideoId
 	      });
 	    }
 	  }, {
@@ -27199,8 +27204,10 @@
 	      var cVid = this.state.currentVid;
 	      var vidLength = this.state.videos.length - 1;
 	      var preVid = cVid - 1 < 0 ? vidLength : cVid - 1;
+	      var currentVideoId = this.state.videos[preVid].videoId;
 	      this.setState({
-	        currentVid: preVid
+	        currentVid: preVid,
+	        currentVideoId: currentVideoId
 	      });
 	    }
 	  }, {
@@ -27243,13 +27250,14 @@
 	            value = _ref2.value;
 	
 	        var color = idx % 2 === 0 ? 'grey' : 'white';
+	        var active = void 0;
 	        if (value.videoId === _this2.state.currentVideoId) {
-	          color = 'active-vid';
+	          active = 'active-vid';
 	        }
 	        return _react2.default.createElement(
 	          'div',
 	          {
-	            className: 'playlist-el ' + color },
+	            className: 'playlist-el ' + color + ' ' + active },
 	          value.title
 	        );
 	      });
@@ -27274,10 +27282,13 @@
 	
 	      var opts = { height: '390' };
 	      // width: '640'
-	      var vids = this.state.videos;
-	      var vidId = this.state.vidId;
-	      var activeVid = vids[this.state.currentVid].videoId;
-	      var title = vids[this.state.currentVid].title;
+	      var _state = this.state,
+	          videos = _state.videos,
+	          vidId = _state.vidId,
+	          videoId = _state.videoId,
+	          currentVideoId = _state.currentVideoId;
+	
+	      var title = videos[this.state.currentVid].title;
 	
 	      var playVid = this.playVid,
 	          updateCurrentVid = this.updateCurrentVid,
@@ -27307,7 +27318,7 @@
 	              'div',
 	              { className: 'youtube-wrapper' },
 	              _react2.default.createElement(_reactYoutube2.default, {
-	                videoId: activeVid,
+	                videoId: currentVideoId,
 	                onStateChange: function onStateChange(event) {
 	                  return stateChange(event);
 	                },
@@ -27322,88 +27333,92 @@
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
-	          { xs: 7, md: 4 },
+	          { xs: 8, xsOffset: 2, md: 5, mdOffset: 0 },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'playlist-wrapper' },
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 5 },
-	              _react2.default.createElement(
-	                'h4',
-	                null,
-	                'Up next'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 7 },
-	              _react2.default.createElement(
-	                'h4',
-	                null,
-	                'Autoplay: Put Toggle here'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 12 },
-	              _react2.default.createElement(SortableList, {
-	                items: this.state.videos,
-	                onSortEnd: onSortEnd,
-	                lockAxis: 'y' })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            null,
+	            { className: 'play-controls' },
 	            _react2.default.createElement(
 	              'div',
-	              null,
+	              { className: 'playlist-wrapper' },
 	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                {
-	                  onClick: function onClick() {
-	                    return shuffle();
-	                  } },
-	                'SHUFFLE'
+	                _reactBootstrap.Col,
+	                { xs: 5 },
+	                _react2.default.createElement(
+	                  'h4',
+	                  null,
+	                  'PLAYLIST'
+	                )
 	              ),
 	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                {
-	                  onClick: function onClick() {
-	                    return autoplay();
-	                  } },
-	                'AUTOPLAY'
+	                _reactBootstrap.Col,
+	                { xs: 7 },
+	                _react2.default.createElement(
+	                  'h4',
+	                  null,
+	                  'AUTOPLAY: Put Toggle here'
+	                )
 	              ),
 	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                {
-	                  onClick: function onClick() {
-	                    return controls('prev');
-	                  } },
-	                'PREVIOUS'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                {
-	                  onClick: function onClick() {
-	                    return controls('next');
-	                  } },
-	                'NEXT'
+	                _reactBootstrap.Col,
+	                { xs: 12 },
+	                _react2.default.createElement(SortableList, {
+	                  items: this.state.videos,
+	                  onSortEnd: onSortEnd,
+	                  lockAxis: 'y' })
 	              )
 	            ),
 	            _react2.default.createElement(
-	              'form',
-	              null,
-	              _react2.default.createElement(_reactBootstrap.FormControl, {
-	                id: 'formControlsText',
-	                type: 'text',
-	                label: 'Text',
-	                placeholder: 'Add a YouTube URL' }),
+	              'div',
+	              { className: 'controls' },
 	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { type: 'submit' },
-	                'SUBMIT'
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  {
+	                    onClick: function onClick() {
+	                      return shuffle();
+	                    } },
+	                  'SHUFFLE'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  {
+	                    onClick: function onClick() {
+	                      return autoplay();
+	                    } },
+	                  'AUTOPLAY'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  {
+	                    onClick: function onClick() {
+	                      return controls('prev');
+	                    } },
+	                  'PREVIOUS'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  {
+	                    onClick: function onClick() {
+	                      return controls('next');
+	                    } },
+	                  'NEXT'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'form',
+	                null,
+	                _react2.default.createElement(_reactBootstrap.FormControl, {
+	                  id: 'formControlsText',
+	                  type: 'text',
+	                  label: 'Text',
+	                  placeholder: 'Add a YouTube URL' }),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { type: 'submit' },
+	                  'SUBMIT'
+	                )
 	              )
 	            )
 	          )

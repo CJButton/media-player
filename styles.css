@@ -23,6 +23,8 @@ html, body {
 
 .youtube-wrapper {
   text-align: center;
+  position:relative;
+  overflow:hidden;
 }
 
 .playlist-el {
@@ -51,6 +53,5 @@ html, body {
 }
 
 .active-vid {
-  background-color: green;
-  color: white;
+  border: red solid 2px;
 }

@@ -19,17 +19,17 @@ export default class Playlist extends React.Component {
       super(props);
       this.state = {
         videos: [
+          {title: "Robbaz Here",
+            videoId: 'dmkpuK6ImWI'},
           {title: 'Best of the Worst: The Sweeper',
            videoId: 'kWKlmbTudD8'},
           {title: "the rising e1",
            videoId: 'A8NaIt6eFCk'},
-          {title: "Robbaz Here",
-           videoId: 'dmkpuK6ImWI'},
           {title: "BotW Sequels",
            videoId: '9cNUg3XvVKk'},
         ],
         currentVid: 0,
-        currentVideoId: 'kWKlmbTudD8',
+        currentVideoId: 'dmkpuK6ImWI',
         autoplay: false
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
@@ -47,8 +47,10 @@ export default class Playlist extends React.Component {
       let cVid = this.state.currentVid;
       let vidLength = this.state.videos.length - 1;
       let newVid = cVid + 1 > vidLength ? 0 : cVid += 1
+      let currentVideoId = this.state.videos[newVid].videoId;
       this.setState({
-        currentVid: newVid
+        currentVid: newVid,
+        currentVideoId: currentVideoId
       });
     }
 
@@ -71,8 +73,11 @@ export default class Playlist extends React.Component {
     }
 
     changeVideo(i) {
+      let currentVideoId = this.state.videos[i].videoId;
+
       this.setState({
-        currentVid: i
+        currentVid: i,
+        currentVideoId: currentVideoId
       });
     }
 
@@ -104,8 +109,10 @@ export default class Playlist extends React.Component {
       const cVid = this.state.currentVid;
       const vidLength = this.state.videos.length - 1;
       const preVid = (cVid - 1 < 0) ? vidLength : (cVid - 1)
+      let currentVideoId = this.state.videos[preVid].videoId;
       this.setState({
-        currentVid: preVid
+        currentVid: preVid,
+        currentVideoId: currentVideoId
       });
     }
 
@@ -131,10 +138,11 @@ export default class Playlist extends React.Component {
 
       const SortableItem = SortableElement(({idx, value}) => {
         let color = (idx % 2 === 0) ? 'grey' : 'white'
-        if (value.videoId === this.state.currentVideoId) {color = 'active-vid'}
+        let active;
+        if (value.videoId === this.state.currentVideoId) {active = 'active-vid'}
         return(
           <div
-            className={`playlist-el ${color}`}>
+            className={`playlist-el ${color} ${active}`}>
             {value.title}
           </div>
         );
@@ -159,10 +167,13 @@ export default class Playlist extends React.Component {
 
       const opts = { height: '390' };
         // width: '640'
-      let vids = this.state.videos;
-      let vidId = this.state.vidId;
-      let activeVid = vids[this.state.currentVid].videoId;
-      let title = vids[this.state.currentVid].title;
+      const {
+        videos,
+        vidId,
+        videoId,
+        currentVideoId
+      } = this.state;
+      let title = videos[this.state.currentVid].title;
 
       const {
         playVid,
@@ -184,7 +195,7 @@ export default class Playlist extends React.Component {
               </h3>
                 <div className='youtube-wrapper'>
                   <YouTube
-                    videoId={activeVid}
+                    videoId={currentVideoId}
                     onStateChange={(event) => stateChange(event)}
                     onReady={(event) => playVid(event)}
                     onEnd={() => updateCurrentVid()}/>
@@ -193,16 +204,18 @@ export default class Playlist extends React.Component {
           </Col>
 
           {/* Playlist */}
-          <Col xs={7} md={4}>
+          <Col xs={8} xsOffset={2} md={5} mdOffset={0}>
+            <div className='play-controls'>
+
           <div className='playlist-wrapper'>
             <Col xs={5}>
               <h4>
-                Up next
+                PLAYLIST
               </h4>
             </Col>
             <Col xs={7}>
               <h4>
-                Autoplay: Put Toggle here
+                AUTOPLAY: Put Toggle here
               </h4>
             </Col>
             <Col xs={12}>
@@ -212,7 +225,7 @@ export default class Playlist extends React.Component {
                 lockAxis={'y'} />
             </Col>
             </div>
-            <div>
+            <div className='controls'>
               <div>
                 <Button
                   onClick={() => shuffle()}>
@@ -241,7 +254,7 @@ export default class Playlist extends React.Component {
                   SUBMIT
                 </Button>
               </form>
-
+            </div>
             </div>
       </Col>
       </div>

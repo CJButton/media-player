@@ -20,5 +20,7 @@ New playlist Component that allows users to add videos and drag/drop the video o
 - alternating colors for playlist
 - have active color for current video
 - Add toggle npm for autoplay
+Consider TWO youtube players, for varying screen widths; when viewport changes,
+the players are switched in unison. @media should be able to help with this.
 AJAX request to get video title
 Write Big O complexity for Shuffle method
