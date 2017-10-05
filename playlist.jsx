@@ -38,7 +38,7 @@ export default class Playlist extends React.Component {
         ],
         currentVid: 0,
         currentVideoId: 'dmkpuK6ImWI',
-        autoplay: false
+        autoplay: true
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
       this.playVid = this.playVid.bind(this);
@@ -89,6 +89,7 @@ export default class Playlist extends React.Component {
     }
 
     autoplay() {
+      console.log('in autoplay');
       let newState = this.state.autoplay === true ? false : true
       this.setState({
         autoplay: newState
@@ -210,6 +211,8 @@ export default class Playlist extends React.Component {
         onSortEnd
       } = this;
 
+      let autoplayStatus = this.state.autoplay === false ? 'OFF' : 'ON'
+
       return(
         <div className='home-wrapper'>
           {/* Player */}
@@ -236,9 +239,14 @@ export default class Playlist extends React.Component {
               </h4>
             </Col>
             <Col xs={7}>
-              <h4 className='title'>
-                AUTOPLAY: Put Toggle here
-              </h4>
+                <h4 className='title'>
+                  AUTOPLAY:
+                  <Button
+                    onClick={() => this.autoplay()}
+                    id={autoplayStatus}>
+                    {autoplayStatus}
+                  </Button>
+                </h4>
             </Col>
             <Col xs={12}>
               <SortableList

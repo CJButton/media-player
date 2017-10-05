@@ -47090,7 +47090,7 @@
 	        videoId: "3f7L2YwJ6VM" }],
 	      currentVid: 0,
 	      currentVideoId: 'dmkpuK6ImWI',
-	      autoplay: false
+	      autoplay: true
 	    };
 	    _this.updateCurrentVid = _this.updateCurrentVid.bind(_this);
 	    _this.playVid = _this.playVid.bind(_this);
@@ -47148,6 +47148,7 @@
 	  }, {
 	    key: 'autoplay',
 	    value: function autoplay() {
+	      console.log('in autoplay');
 	      var newState = this.state.autoplay === true ? false : true;
 	      this.setState({
 	        autoplay: newState
@@ -47290,6 +47291,8 @@
 	          onSortEnd = this.onSortEnd;
 	
 	
+	      var autoplayStatus = this.state.autoplay === false ? 'OFF' : 'ON';
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'home-wrapper' },
@@ -47340,7 +47343,16 @@
 	                _react2.default.createElement(
 	                  'h4',
 	                  { className: 'title' },
-	                  'AUTOPLAY: Put Toggle here'
+	                  'AUTOPLAY:',
+	                  _react2.default.createElement(
+	                    _reactBootstrap.Button,
+	                    {
+	                      onClick: function onClick() {
+	                        return _this3.autoplay();
+	                      },
+	                      id: autoplayStatus },
+	                    autoplayStatus
+	                  )
 	                )
 	              ),
 	              _react2.default.createElement(

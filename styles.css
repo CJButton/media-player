@@ -47,6 +47,18 @@ html, body {
   margin-top: 3em;
 }
 
+#ON {
+  background-color: green;
+  color: #E5E5E5;
+  margin-left: 1em;
+}
+
+#OFF {
+  background-color: #FF0000;
+  color: #E5E5E5;
+  margin-left: 1em;
+}
+
 .playlist-el {
   margin: 1em;
   border-radius: 2px;
