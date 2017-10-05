@@ -47090,7 +47090,7 @@
 	        videoId: "3f7L2YwJ6VM" }],
 	      currentVid: 0,
 	      currentVideoId: 'dmkpuK6ImWI',
-	      autoplay: true
+	      autoplay: false
 	    };
 	    _this.updateCurrentVid = _this.updateCurrentVid.bind(_this);
 	    _this.playVid = _this.playVid.bind(_this);
@@ -47100,16 +47100,19 @@
 	    _this.autoplay = _this.autoplay.bind(_this);
 	    _this.controls = _this.controls.bind(_this);
 	    _this.onSortEnd = _this.onSortEnd.bind(_this);
-	    _this.addVideo = _this.addVideo.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Playlist, [{
 	    key: 'updateCurrentVid',
 	    value: function updateCurrentVid() {
+	      {/* This function fires after a video is finished and autoplay is true.
+	           It will play the next video, and if at the end, will loop. */}
+	      {/* この関数はビデオを見終わると次のビデオを自動再生します。最後のビデオだったら、最初のビデオに戻ります。 */}
 	      var cVid = this.state.currentVid;
 	      var vidLength = this.state.videos.length - 1;
 	      var newVid = cVid + 1 > vidLength ? 0 : cVid += 1;
+	      console.log(newVid);
 	      var currentVideoId = this.state.videos[newVid].videoId;
 	      this.setState({
 	        currentVid: newVid,
@@ -47119,18 +47122,24 @@
 	  }, {
 	    key: 'playVid',
 	    value: function playVid(event) {
+	      {/* YouTube's API has a built-in playVideo function */}
+	      {/* YouTube'sのAPIにはplayVideoの関数があります。これでビデオは始められます。 */}
+	      {} /* BUG BUG BUG Uncomment before sending!!! BUG BUG BUG  */
 	      //  event.target.playVideo();
 	    }
 	  }, {
 	    key: 'stateChange',
 	    value: function stateChange(event) {
-	      //  -1 (unstarted)
-	      //   0 (ended)
-	      //   1 (playing)
-	      //   2 (paused)
-	      //   3 (buffering)
-	      //   5 (video cued).
-	      {/* autoplay - play if cued up and autoplay is on */}
+	      {/* YouTube's module will emit these events on each change. */}
+	      {/* YouTubeのモジュールが変わる度に、このイベントが起こります */}
+	      {/*
+	         -1 (unstarted)
+	         0 (ended)
+	         1 (playing)
+	         2 (paused)
+	         3 (buffering)
+	         5 (video cued).
+	         */}
 	      if (this.state.autoplay && event.data === 5) {
 	        this.playVid(event);
 	      }
@@ -47148,19 +47157,16 @@
 	  }, {
 	    key: 'autoplay',
 	    value: function autoplay() {
-	      console.log('in autoplay');
 	      var newState = this.state.autoplay === true ? false : true;
-	      this.setState({
-	        autoplay: newState
-	      });
+	      this.setState({ autoplay: newState });
 	    }
 	  }, {
 	    key: 'shuffle',
 	    value: function shuffle() {
 	      var _this2 = this;
 	
-	      {/* ???should shuffle update current video or start after finishing??? */}
 	      {/* Sattolo Algorithm */}
+	      {/* Big O(n) 複雑さ */}
 	      var items = this.state.videos;
 	      for (var i = items.length - 1; i > 0; i -= 1) {
 	        var j = Math.floor(Math.random() * i);
@@ -47170,6 +47176,7 @@
 	      }
 	
 	      {/* Maintains current video after shuffle and continues on to the SHUFFLED next video */}
+	      {/* シャッフルした後にnextボタンを押しても、再生されるビデオは一つ下のビデオになります。 */}
 	      var updatedIdx = void 0;
 	      items.map(function (vid, i) {
 	        if (vid.videoId === _this2.state.currentVideoId) {
@@ -47204,26 +47211,24 @@
 	      var oldIndex = _ref.oldIndex,
 	          newIndex = _ref.newIndex;
 	
-	      {/* Mimics onClick pretty well */}
+	      {/* After a selection is moved, the old index and new index are passed here */}
+	      {/* 選択されたビデオが動かされた後、前回のindexと新たなindexが渡されました*/}
+	
+	      {/* Mimics onClick */}
+	      {/* onClickの関数を真似ます。*/}
 	      if (oldIndex === newIndex) return this.changeVideo(newIndex);
 	
 	      {/* Maintains active video when moving items in list */}
+	      {/* リストを動かしても、見ているビデオは変わりません。*/}
 	      var currentVid = this.state.currentVid;
 	      if (oldIndex === currentVid) {
 	        this.setState({ currentVid: newIndex });
-	      } else if (newIndex < currentVid || newIndex === currentVid) {
-	        // currentVid += 1
-	        this.setState({ currentVid: currentVid += 1 });
 	      }
-	
 	      var items = this.state.videos;
-	      {/* Allows for click and drag */}
+	      {/* Using the array of items, and the old and new indexes, the local State
+	         will be updated with the new ordering */}
+	      {/* ビデオの配列と、前回のindexと、新たなindexによって、ステートが更新されます。 */}
 	      this.setState({ videos: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex) });
-	    }
-	  }, {
-	    key: 'addVideo',
-	    value: function addVideo(e) {
-	      console.log(e.target.value);
 	    }
 	  }, {
 	    key: 'render',
@@ -47231,27 +47236,21 @@
 	      var _this3 = this;
 	
 	      var items = this.state.videos;
-	      var DragHandle = (0, _reactSortableHoc.SortableHandle)(function () {
-	        return _react2.default.createElement(
-	          'span',
-	          null,
-	          '::'
-	        );
-	      });
 	
 	      var SortableItem = (0, _reactSortableHoc.SortableElement)(function (_ref2) {
 	        var idx = _ref2.idx,
 	            value = _ref2.value;
 	
-	        var color = idx % 2 === 0 ? 'grey' : 'white';
 	        var active = void 0;
 	        if (value.videoId === _this3.state.currentVideoId) {
 	          active = 'active-vid';
 	        }
+	        {/* Videos chosen by the user are highlighted with active */}
+	        {/* 選択されたビデオは赤で強調表示されました。 */}
 	        return _react2.default.createElement(
 	          'div',
 	          {
-	            className: 'playlist-el ' + color + ' ' + active },
+	            className: 'playlist-el white ' + active },
 	          value.title
 	        );
 	      });
@@ -47260,6 +47259,8 @@
 	        var items = _ref3.items;
 	
 	        var vids = _this3.state.videos;
+	        {/* Each item in the playlist (in state) is  iterated over and passed to SortableItem */}
+	        {/* プレイリストの中の曲は（ステートに）、反復処理して SortableItem に渡されました。 */}
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'sortableList' },
@@ -47275,7 +47276,7 @@
 	      });
 	
 	      var opts = { height: '390' };
-	      // width: '640'
+	
 	      var _state = this.state,
 	          videos = _state.videos,
 	          vidId = _state.vidId,
@@ -47297,26 +47298,36 @@
 	        'div',
 	        { className: 'home-wrapper' },
 	        _react2.default.createElement(
+	          'div',
+	          { className: 'instructions' },
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Click and Drag Titles'
+	          ),
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            '\u30D3\u30C7\u30AA\u306E\u30BF\u30A4\u30C8\u30EB\u3092\u30AF\u30EA\u30C3\u30AF&\u30C9\u30E9\u30C3\u30B0\u3057\u3066\u597D\u304D\u306A\u9806\u756A\u306B\u5909\u3048\u3089\u308C\u307E\u3059'
+	          )
+	        ),
+	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { xs: 12, md: 7 },
 	          _react2.default.createElement(
 	            'div',
-	            null,
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'youtube-wrapper' },
-	              _react2.default.createElement(_reactYoutube2.default, {
-	                videoId: currentVideoId,
-	                onStateChange: function onStateChange(event) {
-	                  return stateChange(event);
-	                },
-	                onReady: function onReady(event) {
-	                  return playVid(event);
-	                },
-	                onEnd: function onEnd() {
-	                  return updateCurrentVid();
-	                } })
-	            )
+	            { className: 'youtube-wrapper' },
+	            _react2.default.createElement(_reactYoutube2.default, {
+	              videoId: currentVideoId,
+	              onStateChange: function onStateChange(event) {
+	                return stateChange(event);
+	              },
+	              onReady: function onReady(event) {
+	                return playVid(event);
+	              },
+	              onEnd: function onEnd() {
+	                return updateCurrentVid();
+	              } })
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -47397,20 +47408,6 @@
 	                      return controls('next');
 	                    } },
 	                  'NEXT'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'form',
-	                null,
-	                _react2.default.createElement(_reactBootstrap.FormControl, {
-	                  id: 'formControlsText',
-	                  type: 'text',
-	                  label: 'Text',
-	                  placeholder: 'Add a YouTube URL' }),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { type: 'submit' },
-	                  'SUBMIT'
 	                )
 	              )
 	            )

@@ -1,29 +1,57 @@
 
+How to Use:
+使い方：
 
-Features:
-Can play videos
-Have a playlist showing at least 5 videos in the queue
-Can change current video with next/previous button
-Shuffle button that randomizes order and prevents same order from appearing twice
-in a row
-Allow user to change video order
- - Drag and drop would be most intuitive way to do this
+Click on index.html to open.
+index.htmlをクッリクしてください。
 
-Dev Cycle:
-Get basic page up
-Get basic video player up
-Create basic, unchangeable playlist for testing
-Creat next/prev button
-Shuffle feature - Model after iTunes shuffle ( *** explain Big O complexity *** )
-New playlist Component that allows users to add videos and drag/drop the video order, allowing for personalized playlist
-* Style should attempt to be sort of youtube-esque, night-version
-- alternating colors for playlist
-- have active color for current video
-- Add toggle npm for autoplay
-Consider TWO youtube players, for varying screen widths; when viewport changes,
-the players are switched in unison. @media should be able to help with this.
-AJAX request to get video title
-Write Big O complexity for Shuffle method
-Fix shuffle issue with active videoId not being updated
-Fix video title when moving videos around
-***Bug*** Next/Prev are off after moving elements around ***Bug***
+Videos will begin playing automatically.
+自動的にビデオが始まります。
+
+The shuffle button will always produce a unique shuffle. No two videos will be
+at the same index.
+シャフルのボタンは毎回ユニークなシャフルを作ります。各ビデオは新たなポジションに動きます。
+
+Users can change the order of videos by clicking, and then dragging them to where
+they wish.
+ビデオをクリック＆ドラッグして、希望のポジションに動かすことで、ユーザーは望ましいリストを作れます。
+
+
+-----------
+Maintenance:
+メンテナンス:
+
+Formatting:
+All videos to be played MUST be formatted in this way: {title: STRING, videoId: STRING}.
+The 'videoId' string is the unique YouTube id.
+For example: https://www.youtube.com/watch?v=uLKCXn_aQrY&t=0s
+In this example, the unique id is between 'watch?v=' and '&t=0s'.
+
+フォーマット:
+全部のビデオはフォーマットを守ってください：{title: STRING, videoId: STRING}
+'videoId'の文字列とはユニークなYouTube IDです。
+例えば: https://www.youtube.com/watch?v=uLKCXn_aQrY&t=0s
+上記の例ではユニークなIDは'watch?v='と'&t=0s'の間です。
+
+--
+
+YouTube API
+YouTube has a special API designed for it. Using 'react-youtube', we can use
+these events. Whenever a change occurs in the player, an event is generated and
+can be found at 'stateChange(event)'. If you wish to do further improvements, I
+have left the unique numbers needed to do so.
+
+YouTube API
+YouTubeには特別なAPIがあります。'react-youtube'で私たちもこのイベントを使えます。YouTubeの
+プレーヤーが変わる度に、新しいイベントが作られます。'stateChange(event)'で全部のイベントが見えます。
+このプレーヤーの開発を続けるために、イベントの数を残しておきました。
+
+-----------
+The following NPM were used. If you have an error, consider checking these pages.
+以下のNPM使いました。エラーが起こったら、このページを見てください。
+react-sortable-hoc
+https://github.com/clauderic/react-sortable-hoc
+react-youtube
+https://github.com/troybetz/react-youtube
+react-bootstrap
+https://react-bootstrap.github.io/components.html

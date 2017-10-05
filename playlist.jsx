@@ -38,7 +38,7 @@ export default class Playlist extends React.Component {
         ],
         currentVid: 0,
         currentVideoId: 'dmkpuK6ImWI',
-        autoplay: true
+        autoplay: false
       }
       this.updateCurrentVid = this.updateCurrentVid.bind(this);
       this.playVid = this.playVid.bind(this);
@@ -48,13 +48,16 @@ export default class Playlist extends React.Component {
       this.autoplay = this.autoplay.bind(this);
       this.controls = this.controls.bind(this);
       this.onSortEnd = this.onSortEnd.bind(this);
-      this.addVideo = this.addVideo.bind(this);
     }
 
     updateCurrentVid() {
+      {/* This function fires after a video is finished and autoplay is true.
+          It will play the next video, and if at the end, will loop. */}
+      {/* この関数はビデオを見終わると次のビデオを自動再生します。最後のビデオだったら、最初のビデオに戻ります。 */}
       let cVid = this.state.currentVid;
       let vidLength = this.state.videos.length - 1;
       let newVid = cVid + 1 > vidLength ? 0 : cVid += 1
+      console.log(newVid);
       let currentVideoId = this.state.videos[newVid].videoId;
       this.setState({
         currentVid: newVid,
@@ -63,17 +66,23 @@ export default class Playlist extends React.Component {
     }
 
     playVid(event) {
+    {/* YouTube's API has a built-in playVideo function */}
+    {/* YouTube'sのAPIにはplayVideoの関数があります。これでビデオは始められます。 */}
+    {/* BUG BUG BUG Uncomment before sending!!! BUG BUG BUG  */}
     //  event.target.playVideo();
     }
 
     stateChange(event) {
-      //  -1 (unstarted)
-      //   0 (ended)
-      //   1 (playing)
-      //   2 (paused)
-      //   3 (buffering)
-      //   5 (video cued).
-      {/* autoplay - play if cued up and autoplay is on */}
+      {/* YouTube's module will emit these events on each change. */}
+      {/* YouTubeのモジュールが変わる度に、このイベントが起こります */}
+      {/*
+        -1 (unstarted)
+        0 (ended)
+        1 (playing)
+        2 (paused)
+        3 (buffering)
+        5 (video cued).
+        */}
       if (this.state.autoplay && event.data === 5) {
         this.playVid(event);
       }
@@ -89,16 +98,13 @@ export default class Playlist extends React.Component {
     }
 
     autoplay() {
-      console.log('in autoplay');
       let newState = this.state.autoplay === true ? false : true
-      this.setState({
-        autoplay: newState
-      });
+      this.setState({autoplay: newState});
     }
 
     shuffle() {
-      {/* ???should shuffle update current video or start after finishing??? */}
       {/* Sattolo Algorithm */}
+      {/* Big O(n) 複雑さ */}
       let items = this.state.videos;
       for(let i = items.length - 1; i > 0; i -= 1 ) {
         let j = Math.floor(Math.random() * (i));
@@ -108,6 +114,7 @@ export default class Playlist extends React.Component {
       }
 
       {/* Maintains current video after shuffle and continues on to the SHUFFLED next video */}
+      {/* シャッフルした後にnextボタンを押しても、再生されるビデオは一つ下のビデオになります。 */}
       let updatedIdx;
       items.map((vid, i) => {
         if (vid.videoId === this.state.currentVideoId) {
@@ -135,40 +142,39 @@ export default class Playlist extends React.Component {
     }
 
     onSortEnd({oldIndex, newIndex}) {
-      {/* Mimics onClick pretty well */}
+      {/* After a selection is moved, the old index and new index are passed here */}
+      {/* 選択されたビデオが動かされた後、前回のindexと新たなindexが渡されました*/}
+
+      {/* Mimics onClick */}
+      {/* onClickの関数を真似ます。*/}
       if (oldIndex === newIndex) return this.changeVideo(newIndex);
 
       {/* Maintains active video when moving items in list */}
+      {/* リストを動かしても、見ているビデオは変わりません。*/}
       let currentVid = this.state.currentVid;
       if (oldIndex === currentVid) {
         this.setState({currentVid: newIndex});
-      } else if (newIndex < currentVid || newIndex === currentVid) {
-        // currentVid += 1
-        this.setState({currentVid: currentVid += 1});
       }
-
       const items = this.state.videos;
-      {/* Allows for click and drag */}
+      {/* Using the array of items, and the old and new indexes, the local State
+        will be updated with the new ordering */}
+      {/* ビデオの配列と、前回のindexと、新たなindexによって、ステートが更新されます。 */}
       this.setState({videos: arrayMove(items, oldIndex, newIndex)});
      };
 
-     addVideo(e) {
-       console.log(e.target.value);
-     }
-
     render() {
       let items = this.state.videos;
-      const DragHandle = SortableHandle(() => <span>::</span>);
 
       const SortableItem = SortableElement(({idx, value}) => {
-        let color = (idx % 2 === 0) ? 'grey' : 'white'
         let active;
         if (value.videoId === this.state.currentVideoId) {
           active = 'active-vid';
         }
+        {/* Videos chosen by the user are highlighted with active */}
+        {/* 選択されたビデオは赤で強調表示されました。 */}
         return(
           <div
-            className={`playlist-el ${color} ${active}`}>
+            className={`playlist-el white ${active}`}>
             {value.title}
           </div>
         );
@@ -177,6 +183,8 @@ export default class Playlist extends React.Component {
 
       const SortableList = SortableContainer(({items}) => {
         let vids = this.state.videos;
+        {/* Each item in the playlist (in state) is  iterated over and passed to SortableItem */}
+        {/* プレイリストの中の曲は（ステートに）、反復処理して SortableItem に渡されました。 */}
         return (
           <div className='sortableList'>
             {Object.keys(items).map((value, index) => (
@@ -192,7 +200,7 @@ export default class Playlist extends React.Component {
       });
 
       const opts = { height: '390' };
-        // width: '640'
+
       const {
         videos,
         vidId,
@@ -215,17 +223,19 @@ export default class Playlist extends React.Component {
 
       return(
         <div className='home-wrapper'>
-          {/* Player */}
-          <Col xs={12} md={7}>
-          <div>
-              <div className='youtube-wrapper'>
-                <YouTube
-                  videoId={currentVideoId}
-                  onStateChange={(event) => stateChange(event)}
-                  onReady={(event) => playVid(event)}
-                  onEnd={() => updateCurrentVid()}/>
-              </div>
+          <div className='instructions'>
+            <h3>Click and Drag Titles</h3>
+            <h3>ビデオのタイトルをクリック&ドラッグして好きな順番に変えられます</h3>
           </div>
+          {/* YouTube Player */}
+          <Col xs={12} md={7}>
+            <div className='youtube-wrapper'>
+              <YouTube
+                videoId={currentVideoId}
+                onStateChange={(event) => stateChange(event)}
+                onReady={(event) => playVid(event)}
+                onEnd={() => updateCurrentVid()}/>
+            </div>
           </Col>
 
           {/* Playlist */}
@@ -251,6 +261,8 @@ export default class Playlist extends React.Component {
               </div>
             </Col>
             <Col xs={12}>
+              {/* Personalized shuffle list */}
+              {/* ビデオプレイヤーのリスナにとって望ましいシャッフルを実現 */}
               <SortableList
                 items={this.state.videos}
                 onSortEnd={onSortEnd}
@@ -272,19 +284,9 @@ export default class Playlist extends React.Component {
                   NEXT
                 </Button>
               </div>
-              <form>
-                <FormControl
-                  id="formControlsText"
-                  type="text"
-                  label="Text"
-                  placeholder="Add a YouTube URL" />
-                <Button type="submit">
-                  SUBMIT
-                </Button>
-              </form>
             </div>
             </div>
-      </Col>
+        </Col>
       </div>
     )
   }
