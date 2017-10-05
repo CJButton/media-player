@@ -1,4 +1,91 @@
 
+html {
+  font-family: "Roboto", sans-serif;
+}
+
+html, body {
+  font-family: inherit;
+  min-height: 100vh;
+  height:100%;
+  background-color: #141414;
+}
+
 #root {
+  min-height: 100vh;
+  height: 100%;
+}
+
+.app-wrapper {
+  background-color: #141414;
+  color: #E5E5E5;
+  height: 100%;
+}
+
+@media screen and (min-width: 992px) {
+  .play-controls {
+    margin-top: 3em;
+  }
+}
+
+.home-wrapper {
+  margin-top: 2em;
+}
+
+.title {
+  font-family: "Roboto", sans-serif;
+}
+
+.playlist-wrapper {
+  border: black solid 1px;
+  overflow: hidden;
+}
+
+.youtube-wrapper {
+  text-align: center;
+  position:relative;
+  overflow:hidden;
+  margin-top: 3em;
+}
+
+.playlist-el {
+  margin: 1em;
+  border-radius: 2px;
+  padding: 7px;
+}
+
+.playlist-el:hover {
+  cursor: pointer;
+}
+
+.sortableList {
+  overflow: auto;
+}
+
+.sortable-list-wrapper {
+  border: black solid 1px;
+  background-color: #E5E5E5;
+}
+
+.grey {
   background-color: grey;
+  color: #E5E5E5;
+}
+
+.white {
+  background-color: #E5E5E5;
+  color: #141414;
+}
+
+.active-vid {
+  background-color: #FF0000;
+  color: #E5E5E5;
+}
+
+.controls-buttons {
+  text-align: center;
+  margin: 1em 0 1em 0;
+}
+
+.controls-buttons > button {
+  margin: 0 2em 0 2em;
 }

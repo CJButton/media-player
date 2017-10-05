@@ -4,13 +4,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
-import Main from './test';
+import { Grid } from 'react-bootstrap';
+
+import Playlist from './playlist';
 
 var App = React.createClass({
   render: function () {
     return(
-      <div>
-        {this.props.children}
+      <div className='app-wrapper'>
+        <Grid id='grid' fluid>
+          {this.props.children}
+        </Grid>
       </div>
     );
   }
@@ -18,7 +22,7 @@ var App = React.createClass({
 
 const routes = (
   <Route path="/" component={App}>
-    <IndexRoute component={Main}/>
+    <IndexRoute component={Playlist}/>
   </Route>
 )
 
