@@ -24,3 +24,4 @@ Consider TWO youtube players, for varying screen widths; when viewport changes,
 the players are switched in unison. @media should be able to help with this.
 AJAX request to get video title
 Write Big O complexity for Shuffle method
+Fix shuffle issue with active videoId not being updated

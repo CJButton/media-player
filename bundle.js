@@ -27217,22 +27217,18 @@
 	      var oldIndex = _ref.oldIndex,
 	          newIndex = _ref.newIndex;
 	
-	      {/* Allows for onClick */}
+	      {/* Mimics onClick pretty well */}
 	      if (oldIndex === newIndex) return this.changeVideo(newIndex);
 	
-	      var items = this.state.videos;
+	      {/* Maintains active video when moving items in list */}
 	      var currentVid = this.state.currentVid;
 	      if (oldIndex === currentVid) {
 	        this.setState({ currentVid: newIndex });
 	      }
-	      console.log(oldIndex);
-	      console.log(newIndex);
-	      // this.changeVideo(value.videoId);
-	      // updateCurrentVid if active
+	
+	      var items = this.state.videos;
 	      {/* Allows for click and drag */}
-	      this.setState({
-	        videos: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex)
-	      });
+	      this.setState({ videos: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex) });
 	    }
 	  }, {
 	    key: 'addVideo',
@@ -27310,7 +27306,7 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'home-wrapper' },
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { xs: 12, md: 7 },
@@ -27381,23 +27377,7 @@
 	              { className: 'controls' },
 	              _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  {
-	                    onClick: function onClick() {
-	                      return shuffle();
-	                    } },
-	                  'SHUFFLE'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  {
-	                    onClick: function onClick() {
-	                      return autoplay();
-	                    } },
-	                  'AUTOPLAY'
-	                ),
+	                { className: 'controls-buttons' },
 	                _react2.default.createElement(
 	                  _reactBootstrap.Button,
 	                  {
@@ -27405,6 +27385,14 @@
 	                      return controls('prev');
 	                    } },
 	                  'PREVIOUS'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  {
+	                    onClick: function onClick() {
+	                      return shuffle();
+	                    } },
+	                  'SHUFFLE'
 	                ),
 	                _react2.default.createElement(
 	                  _reactBootstrap.Button,

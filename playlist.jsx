@@ -118,20 +118,16 @@ export default class Playlist extends React.Component {
     }
 
     onSortEnd({oldIndex, newIndex}) {
-      {/* Allows for onClick */}
+      {/* Mimics onClick pretty well */}
       if (oldIndex === newIndex) return this.changeVideo(newIndex);
 
-      const items = this.state.videos;
+      {/* Maintains active video when moving items in list */}
       const currentVid = this.state.currentVid;
       if (oldIndex === currentVid) {this.setState({currentVid: newIndex})}
-      console.log(oldIndex);
-      console.log(newIndex);
-      // this.changeVideo(value.videoId);
-      // updateCurrentVid if active
+
+      const items = this.state.videos;
       {/* Allows for click and drag */}
-      this.setState({
-         videos: arrayMove(items, oldIndex, newIndex)
-       });
+      this.setState({videos: arrayMove(items, oldIndex, newIndex)});
      };
 
      addVideo(e) {
@@ -195,7 +191,7 @@ export default class Playlist extends React.Component {
         onSortEnd
       } = this;
       return(
-        <div>
+        <div className='home-wrapper'>
           {/* Player */}
           <Col xs={12} md={7}>
           <div>
@@ -226,6 +222,7 @@ export default class Playlist extends React.Component {
               <h4>
                 AUTOPLAY: Put Toggle here
               </h4>
+              {/*onClick={() => autoplay()}*/}
             </Col>
             <Col xs={12}>
               <SortableList
@@ -235,18 +232,14 @@ export default class Playlist extends React.Component {
             </Col>
             </div>
             <div className='controls'>
-              <div>
-                <Button
-                  onClick={() => shuffle()}>
-                  SHUFFLE
-                </Button>
-                <Button
-                  onClick={() => autoplay()}>
-                  AUTOPLAY
-                </Button>
+              <div className='controls-buttons'>
                 <Button
                   onClick={() => controls('prev')}>
                   PREVIOUS
+                </Button>
+                <Button
+                  onClick={() => shuffle()}>
+                  SHUFFLE
                 </Button>
                 <Button
                   onClick={() => controls('next')}>

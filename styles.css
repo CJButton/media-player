@@ -16,6 +16,16 @@ html, body {
   height: 100%;
 }
 
+@media screen and (min-width: 992px) {
+  .play-controls {
+    margin-top: 4em;
+  }
+}
+
+.home-wrapper {
+  margin-top: 2em;
+}
+
 .playlist-wrapper {
   border: black solid 1px;
   overflow: hidden;
@@ -54,4 +64,13 @@ html, body {
 
 .active-vid {
   border: red solid 2px;
+}
+
+.controls-buttons {
+  text-align: center;
+  margin: 1em 0 1em 0;
+}
+
+.controls-buttons > button {
+  margin: 0 2em 0 2em;
 }
