@@ -56,6 +56,10 @@ html, body {
   cursor: pointer;
 }
 
+.sortableList {
+  overflow: auto;
+}
+
 .sortable-list-wrapper {
   border: black solid 1px;
   background-color: white;

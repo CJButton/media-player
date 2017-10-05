@@ -27,6 +27,12 @@ export default class Playlist extends React.Component {
            videoId: 'A8NaIt6eFCk'},
           {title: "BotW Sequels",
            videoId: '9cNUg3XvVKk'},
+           {title: "Shenmue 2 E1",
+           videoId: "2pr2_ytnxcI"},
+           {title: "Shenmue 2 E2",
+           videoId: "2pr2_ytnxcI"},
+           {title: "Shenmue 2 E3",
+           videoId: "2pr2_ytnxcI"}
         ],
         currentVid: 0,
         currentVideoId: 'dmkpuK6ImWI',
@@ -123,7 +129,11 @@ export default class Playlist extends React.Component {
 
       {/* Maintains active video when moving items in list */}
       const currentVid = this.state.currentVid;
-      if (oldIndex === currentVid) {this.setState({currentVid: newIndex})}
+      if (oldIndex === currentVid) {
+        this.setState({currentVid: newIndex});
+      } else if (newIndex < currentVid || newIndex === currentVid) {
+        this.setState({currentVid: currentVid + 1});
+      }
 
       const items = this.state.videos;
       {/* Allows for click and drag */}
@@ -157,7 +167,7 @@ export default class Playlist extends React.Component {
       const SortableList = SortableContainer(({items}) => {
         let vids = this.state.videos;
         return (
-          <div>
+          <div className='sortableList'>
             {Object.keys(items).map((value, index) => (
               <SortableItem
                 key={index}
@@ -222,7 +232,6 @@ export default class Playlist extends React.Component {
               <h4 className='title'>
                 AUTOPLAY: Put Toggle here
               </h4>
-              {/*onClick={() => autoplay()}*/}
             </Col>
             <Col xs={12}>
               <SortableList

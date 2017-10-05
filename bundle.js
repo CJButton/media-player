@@ -47083,7 +47083,10 @@
 	        videoId: 'dmkpuK6ImWI' }, { title: 'Best of the Worst: The Sweeper',
 	        videoId: 'kWKlmbTudD8' }, { title: "the rising e1",
 	        videoId: 'A8NaIt6eFCk' }, { title: "BotW Sequels",
-	        videoId: '9cNUg3XvVKk' }],
+	        videoId: '9cNUg3XvVKk' }, { title: "Shenmue 2 E1",
+	        videoId: "2pr2_ytnxcI" }, { title: "Shenmue 2 E2",
+	        videoId: "2pr2_ytnxcI" }, { title: "Shenmue 2 E3",
+	        videoId: "2pr2_ytnxcI" }],
 	      currentVid: 0,
 	      currentVideoId: 'dmkpuK6ImWI',
 	      autoplay: false
@@ -47196,6 +47199,8 @@
 	      var currentVid = this.state.currentVid;
 	      if (oldIndex === currentVid) {
 	        this.setState({ currentVid: newIndex });
+	      } else if (newIndex < currentVid || newIndex === currentVid) {
+	        this.setState({ currentVid: currentVid + 1 });
 	      }
 	
 	      var items = this.state.videos;
@@ -47245,7 +47250,7 @@
 	        var vids = _this2.state.videos;
 	        return _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'sortableList' },
 	          Object.keys(items).map(function (value, index) {
 	            return _react2.default.createElement(SortableItem, {
 	              key: index,
