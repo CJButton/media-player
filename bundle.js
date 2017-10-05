@@ -27163,6 +27163,7 @@
 	  }, {
 	    key: 'changeVideo',
 	    value: function changeVideo(i) {
+	      console.log(i);
 	      var currentVideoId = this.state.videos[i].videoId;
 	
 	      this.setState({
@@ -27218,8 +27219,16 @@
 	
 	      {/* Allows for onClick */}
 	      if (oldIndex === newIndex) return this.changeVideo(newIndex);
-	      var items = this.state.videos;
 	
+	      var items = this.state.videos;
+	      var currentVid = this.state.currentVid;
+	      if (oldIndex === currentVid) {
+	        this.setState({ currentVid: newIndex });
+	      }
+	      console.log(oldIndex);
+	      console.log(newIndex);
+	      // this.changeVideo(value.videoId);
+	      // updateCurrentVid if active
 	      {/* Allows for click and drag */}
 	      this.setState({
 	        videos: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex)

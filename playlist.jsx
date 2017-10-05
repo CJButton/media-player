@@ -73,6 +73,7 @@ export default class Playlist extends React.Component {
     }
 
     changeVideo(i) {
+      console.log(i);
       let currentVideoId = this.state.videos[i].videoId;
 
       this.setState({
@@ -119,11 +120,17 @@ export default class Playlist extends React.Component {
     onSortEnd({oldIndex, newIndex}) {
       {/* Allows for onClick */}
       if (oldIndex === newIndex) return this.changeVideo(newIndex);
-      let items = this.state.videos;
 
+      const items = this.state.videos;
+      const currentVid = this.state.currentVid;
+      if (oldIndex === currentVid) {this.setState({currentVid: newIndex})}
+      console.log(oldIndex);
+      console.log(newIndex);
+      // this.changeVideo(value.videoId);
+      // updateCurrentVid if active
       {/* Allows for click and drag */}
       this.setState({
-         videos: arrayMove(items, oldIndex, newIndex),
+         videos: arrayMove(items, oldIndex, newIndex)
        });
      };
 
@@ -139,7 +146,9 @@ export default class Playlist extends React.Component {
       const SortableItem = SortableElement(({idx, value}) => {
         let color = (idx % 2 === 0) ? 'grey' : 'white'
         let active;
-        if (value.videoId === this.state.currentVideoId) {active = 'active-vid'}
+        if (value.videoId === this.state.currentVideoId) {
+          active = 'active-vid';
+        }
         return(
           <div
             className={`playlist-el ${color} ${active}`}>
