@@ -1,5 +1,10 @@
 
+html {
+  font-family: "Roboto", sans-serif;
+}
+
 html, body {
+  font-family: inherit;
   min-height: 100vh;
   height:100%;
   background-color: #141414;
@@ -24,6 +29,10 @@ html, body {
 
 .home-wrapper {
   margin-top: 2em;
+}
+
+.title {
+  font-family: "Roboto", sans-serif;
 }
 
 .playlist-wrapper {

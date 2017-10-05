@@ -195,7 +195,7 @@ export default class Playlist extends React.Component {
           {/* Player */}
           <Col xs={12} md={7}>
           <div>
-              <h3>
+              <h3 className='title'>
                 Currently Playing: {title}
               </h3>
                 <div className='youtube-wrapper'>
@@ -214,12 +214,12 @@ export default class Playlist extends React.Component {
 
           <div className='playlist-wrapper'>
             <Col xs={5}>
-              <h4>
+              <h4 className='title'>
                 PLAYLIST
               </h4>
             </Col>
             <Col xs={7}>
-              <h4>
+              <h4 className='title'>
                 AUTOPLAY: Put Toggle here
               </h4>
               {/*onClick={() => autoplay()}*/}
