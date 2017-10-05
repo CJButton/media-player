@@ -47084,9 +47084,10 @@
 	        videoId: 'kWKlmbTudD8' }, { title: "the rising e1",
 	        videoId: 'A8NaIt6eFCk' }, { title: "BotW Sequels",
 	        videoId: '9cNUg3XvVKk' }, { title: "Shenmue 2 E1",
-	        videoId: "2pr2_ytnxcI" }, { title: "Shenmue 2 E2",
-	        videoId: "2pr2_ytnxcI" }, { title: "Shenmue 2 E3",
-	        videoId: "2pr2_ytnxcI" }],
+	        videoId: "2pr2_ytnxcI" }, { title: "Alexander",
+	        videoId: "Rfgguab9Nxg" }, { title: "Ashens",
+	        videoId: "uLKCXn_aQrY" }, { title: "The Witness",
+	        videoId: "3f7L2YwJ6VM" }],
 	      currentVid: 0,
 	      currentVideoId: 'dmkpuK6ImWI',
 	      autoplay: false
@@ -47123,7 +47124,6 @@
 	  }, {
 	    key: 'stateChange',
 	    value: function stateChange(event) {
-	      // console.log(event.data);
 	      //  -1 (unstarted)
 	      //   0 (ended)
 	      //   1 (playing)
@@ -47138,7 +47138,6 @@
 	  }, {
 	    key: 'changeVideo',
 	    value: function changeVideo(i) {
-	      console.log(i);
 	      var currentVideoId = this.state.videos[i].videoId;
 	
 	      this.setState({
@@ -47157,6 +47156,8 @@
 	  }, {
 	    key: 'shuffle',
 	    value: function shuffle() {
+	      var _this2 = this;
+	
 	      {/* ???should shuffle update current video or start after finishing??? */}
 	      {/* Sattolo Algorithm */}
 	      var items = this.state.videos;
@@ -47166,8 +47167,18 @@
 	        items[i] = items[j];
 	        items[j] = tmp;
 	      }
+	
+	      {/* Maintains current video after shuffle and continues on to the SHUFFLED next video */}
+	      var updatedIdx = void 0;
+	      items.map(function (vid, i) {
+	        if (vid.videoId === _this2.state.currentVideoId) {
+	          return updatedIdx = i;
+	        }
+	      });
+	
 	      this.setState({
-	        videos: items
+	        videos: items,
+	        currentVid: updatedIdx
 	      });
 	    }
 	  }, {
@@ -47200,7 +47211,8 @@
 	      if (oldIndex === currentVid) {
 	        this.setState({ currentVid: newIndex });
 	      } else if (newIndex < currentVid || newIndex === currentVid) {
-	        this.setState({ currentVid: currentVid + 1 });
+	        // currentVid += 1
+	        this.setState({ currentVid: currentVid += 1 });
 	      }
 	
 	      var items = this.state.videos;
@@ -47215,10 +47227,9 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      var items = this.state.videos;
-	
 	      var DragHandle = (0, _reactSortableHoc.SortableHandle)(function () {
 	        return _react2.default.createElement(
 	          'span',
@@ -47233,7 +47244,7 @@
 	
 	        var color = idx % 2 === 0 ? 'grey' : 'white';
 	        var active = void 0;
-	        if (value.videoId === _this2.state.currentVideoId) {
+	        if (value.videoId === _this3.state.currentVideoId) {
 	          active = 'active-vid';
 	        }
 	        return _react2.default.createElement(
@@ -47247,7 +47258,7 @@
 	      var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref3) {
 	        var items = _ref3.items;
 	
-	        var vids = _this2.state.videos;
+	        var vids = _this3.state.videos;
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'sortableList' },
@@ -47269,9 +47280,6 @@
 	          vidId = _state.vidId,
 	          videoId = _state.videoId,
 	          currentVideoId = _state.currentVideoId;
-	
-	      var title = videos[this.state.currentVid].title;
-	
 	      var playVid = this.playVid,
 	          updateCurrentVid = this.updateCurrentVid,
 	          stateChange = this.stateChange,
@@ -47280,6 +47288,7 @@
 	          shuffle = this.shuffle,
 	          controls = this.controls,
 	          onSortEnd = this.onSortEnd;
+	
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -47290,12 +47299,6 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(
-	              'h3',
-	              { className: 'title' },
-	              'Currently Playing: ',
-	              title
-	            ),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'youtube-wrapper' },

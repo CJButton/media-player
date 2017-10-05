@@ -29,10 +29,12 @@ export default class Playlist extends React.Component {
            videoId: '9cNUg3XvVKk'},
            {title: "Shenmue 2 E1",
            videoId: "2pr2_ytnxcI"},
-           {title: "Shenmue 2 E2",
-           videoId: "2pr2_ytnxcI"},
-           {title: "Shenmue 2 E3",
-           videoId: "2pr2_ytnxcI"}
+           {title: "Alexander",
+           videoId: "Rfgguab9Nxg"},
+           {title: "Ashens",
+           videoId: "uLKCXn_aQrY"},
+           {title: "The Witness",
+           videoId: "3f7L2YwJ6VM"}
         ],
         currentVid: 0,
         currentVideoId: 'dmkpuK6ImWI',
@@ -65,7 +67,6 @@ export default class Playlist extends React.Component {
     }
 
     stateChange(event) {
-      // console.log(event.data);
       //  -1 (unstarted)
       //   0 (ended)
       //   1 (playing)
@@ -79,7 +80,6 @@ export default class Playlist extends React.Component {
     }
 
     changeVideo(i) {
-      console.log(i);
       let currentVideoId = this.state.videos[i].videoId;
 
       this.setState({
@@ -105,8 +105,18 @@ export default class Playlist extends React.Component {
         items[i] = items[j];
         items[j] = tmp;
       }
+
+      {/* Maintains current video after shuffle and continues on to the SHUFFLED next video */}
+      let updatedIdx;
+      items.map((vid, i) => {
+        if (vid.videoId === this.state.currentVideoId) {
+          return updatedIdx = i;
+        }
+      });
+
       this.setState({
-        videos: items
+        videos: items,
+        currentVid: updatedIdx
       });
     }
 
@@ -128,11 +138,12 @@ export default class Playlist extends React.Component {
       if (oldIndex === newIndex) return this.changeVideo(newIndex);
 
       {/* Maintains active video when moving items in list */}
-      const currentVid = this.state.currentVid;
+      let currentVid = this.state.currentVid;
       if (oldIndex === currentVid) {
         this.setState({currentVid: newIndex});
       } else if (newIndex < currentVid || newIndex === currentVid) {
-        this.setState({currentVid: currentVid + 1});
+        // currentVid += 1
+        this.setState({currentVid: currentVid += 1});
       }
 
       const items = this.state.videos;
@@ -146,7 +157,6 @@ export default class Playlist extends React.Component {
 
     render() {
       let items = this.state.videos;
-
       const DragHandle = SortableHandle(() => <span>::</span>);
 
       const SortableItem = SortableElement(({idx, value}) => {
@@ -188,7 +198,6 @@ export default class Playlist extends React.Component {
         videoId,
         currentVideoId
       } = this.state;
-      let title = videos[this.state.currentVid].title;
 
       const {
         playVid,
@@ -200,21 +209,19 @@ export default class Playlist extends React.Component {
         controls,
         onSortEnd
       } = this;
+
       return(
         <div className='home-wrapper'>
           {/* Player */}
           <Col xs={12} md={7}>
           <div>
-              <h3 className='title'>
-                Currently Playing: {title}
-              </h3>
-                <div className='youtube-wrapper'>
-                  <YouTube
-                    videoId={currentVideoId}
-                    onStateChange={(event) => stateChange(event)}
-                    onReady={(event) => playVid(event)}
-                    onEnd={() => updateCurrentVid()}/>
-                </div>
+              <div className='youtube-wrapper'>
+                <YouTube
+                  videoId={currentVideoId}
+                  onStateChange={(event) => stateChange(event)}
+                  onReady={(event) => playVid(event)}
+                  onEnd={() => updateCurrentVid()}/>
+              </div>
           </div>
           </Col>
 

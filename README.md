@@ -26,3 +26,4 @@ AJAX request to get video title
 Write Big O complexity for Shuffle method
 Fix shuffle issue with active videoId not being updated
 Fix video title when moving videos around
+***Bug*** Next/Prev are off after moving elements around ***Bug***

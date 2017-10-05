@@ -23,7 +23,7 @@ html, body {
 
 @media screen and (min-width: 992px) {
   .play-controls {
-    margin-top: 4em;
+    margin-top: 3em;
   }
 }
 
@@ -44,6 +44,7 @@ html, body {
   text-align: center;
   position:relative;
   overflow:hidden;
+  margin-top: 3em;
 }
 
 .playlist-el {
@@ -62,21 +63,22 @@ html, body {
 
 .sortable-list-wrapper {
   border: black solid 1px;
-  background-color: white;
+  background-color: #E5E5E5;
 }
 
 .grey {
   background-color: grey;
-  color: black;
+  color: #E5E5E5;
 }
 
 .white {
-  background-color: white;
-  color: black;
+  background-color: #E5E5E5;
+  color: #141414;
 }
 
 .active-vid {
-  border: red solid 2px;
+  background-color: #FF0000;
+  color: #E5E5E5;
 }
 
 .controls-buttons {
