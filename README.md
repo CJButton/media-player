@@ -53,10 +53,14 @@ YouTubeには特別なAPIがあります。'react-youtube'で私たちもこの�
 
 -----------
 The following NPM were used. If you have an error, consider checking these pages.
+
 以下のNPM使いました。エラーが起こったら、このページを見てください。
+
 react-sortable-hoc
 https://github.com/clauderic/react-sortable-hoc
+
 react-youtube
 https://github.com/troybetz/react-youtube
+
 react-bootstrap
 https://react-bootstrap.github.io/components.html
