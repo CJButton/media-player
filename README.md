@@ -35,6 +35,8 @@ For example: https://www.youtube.com/watch?v=uLKCXn_aQrY&t=0s
 
 In this example, the unique id is between 'watch?v=' and '&t=0s'.
 
+--
+
 フォーマット:
 全部のビデオはフォーマットを守ってください：{title: STRING, videoId: STRING}
 
