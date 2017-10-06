@@ -28,14 +28,20 @@ Maintenance:
 
 Formatting:
 All videos to be played MUST be formatted in this way: {title: STRING, videoId: STRING}.
+
 The 'videoId' string is the unique YouTube id.
+
 For example: https://www.youtube.com/watch?v=uLKCXn_aQrY&t=0s
+
 In this example, the unique id is between 'watch?v=' and '&t=0s'.
 
 フォーマット:
 全部のビデオはフォーマットを守ってください：{title: STRING, videoId: STRING}
+
 'videoId'の文字列とはユニークなYouTube IDです。
+
 例えば: https://www.youtube.com/watch?v=uLKCXn_aQrY&t=0s
+
 上記の例ではユニークなIDは'watch?v='と'&t=0s'の間です。
 
 --
