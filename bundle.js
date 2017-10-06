@@ -47122,8 +47122,8 @@
 	    key: 'playVid',
 	    value: function playVid(event) {
 	      {/* YouTube's API has a built-in playVideo function */}
-	      {/* YouTube'sのAPIにはplayVideoの関数があります。これでビデオは始められます。 */}
-	      event.target.playVideo();
+	      {} /* YouTube'sのAPIにはplayVideoの関数があります。これでビデオは始められます。 */
+	      //  event.target.playVideo();
 	    }
 	  }, {
 	    key: 'stateChange',
@@ -47221,6 +47221,10 @@
 	      var currentVid = this.state.currentVid;
 	      if (oldIndex === currentVid) {
 	        this.setState({ currentVid: newIndex });
+	      } else if (oldIndex < currentVid && newIndex >= currentVid) {
+	        this.setState({
+	          currentVid: currentVid -= 1
+	        });
 	      }
 	      var items = this.state.videos;
 	      {/* Using the array of items, and the old and new indexes, the local State

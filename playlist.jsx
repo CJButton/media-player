@@ -67,7 +67,7 @@ export default class Playlist extends React.Component {
     playVid(event) {
     {/* YouTube's API has a built-in playVideo function */}
     {/* YouTube'sのAPIにはplayVideoの関数があります。これでビデオは始められます。 */}
-     event.target.playVideo();
+    //  event.target.playVideo();
     }
 
     stateChange(event) {
@@ -152,6 +152,10 @@ export default class Playlist extends React.Component {
       let currentVid = this.state.currentVid;
       if (oldIndex === currentVid) {
         this.setState({currentVid: newIndex});
+      } else if (oldIndex < currentVid && newIndex >= currentVid) {
+        this.setState({
+          currentVid: currentVid -= 1
+        });
       }
       const items = this.state.videos;
       {/* Using the array of items, and the old and new indexes, the local State
