@@ -67,7 +67,7 @@ export default class Playlist extends React.Component {
     playVid(event) {
     {/* YouTube's API has a built-in playVideo function */}
     {/* YouTube'sのAPIにはplayVideoの関数があります。これでビデオは始められます。 */}
-    //  event.target.playVideo();
+     event.target.playVideo();
     }
 
     stateChange(event) {

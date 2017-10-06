@@ -47122,8 +47122,8 @@
 	    key: 'playVid',
 	    value: function playVid(event) {
 	      {/* YouTube's API has a built-in playVideo function */}
-	      {} /* YouTube'sのAPIにはplayVideoの関数があります。これでビデオは始められます。 */
-	      //  event.target.playVideo();
+	      {/* YouTube'sのAPIにはplayVideoの関数があります。これでビデオは始められます。 */}
+	      event.target.playVideo();
 	    }
 	  }, {
 	    key: 'stateChange',
