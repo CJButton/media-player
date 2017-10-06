@@ -153,15 +153,15 @@ export default class Playlist extends React.Component {
       if (oldIndex === currentVid) {
         this.setState({currentVid: newIndex});
       } else if (oldIndex < currentVid && newIndex >= currentVid) {
-        this.setState({
-          currentVid: currentVid -= 1
-        });
+        currentVid: currentVid -= 1
       }
       const items = this.state.videos;
       {/* Using the array of items, and the old and new indexes, the local State
         will be updated with the new ordering */}
       {/* ビデオの配列と、前回のindexと、新たなindexによって、ステートが更新されます。 */}
-      this.setState({videos: arrayMove(items, oldIndex, newIndex)});
+      this.setState({
+        videos: arrayMove(items, oldIndex, newIndex),
+        currentVid: currentVid});
      };
 
     render() {
