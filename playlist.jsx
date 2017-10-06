@@ -156,6 +156,10 @@ export default class Playlist extends React.Component {
         this.setState({
           currentVid: currentVid -= 1
         });
+      } else if (oldIndex > currentVid && newIndex <= currentVid) {
+        this.setState({
+          currentVid: currentVid += 1
+        });
       }
       const items = this.state.videos;
       {/* Using the array of items, and the old and new indexes, the local State
