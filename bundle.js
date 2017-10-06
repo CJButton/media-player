@@ -47079,18 +47079,18 @@
 	    var _this = _possibleConstructorReturn(this, (Playlist.__proto__ || Object.getPrototypeOf(Playlist)).call(this, props));
 	
 	    _this.state = {
-	      videos: [{ title: "Robbaz Here",
-	        videoId: 'dmkpuK6ImWI' }, { title: 'Best of the Worst: The Sweeper',
-	        videoId: 'kWKlmbTudD8' }, { title: "the rising e1",
-	        videoId: 'A8NaIt6eFCk' }, { title: "BotW Sequels",
-	        videoId: '9cNUg3XvVKk' }, { title: "Shenmue 2 E1",
-	        videoId: "2pr2_ytnxcI" }, { title: "Alexander",
-	        videoId: "Rfgguab9Nxg" }, { title: "Ashens",
-	        videoId: "uLKCXn_aQrY" }, { title: "The Witness",
-	        videoId: "3f7L2YwJ6VM" }],
+	      videos: [{ title: "Sonic the Hedgehog 2 Full Soundtrack",
+	        videoId: 'YKuPQzhk8rY' }, { title: 'The Legend of Zelda Ocarina of Time Soundtrack',
+	        videoId: 'ZzwvItK3JPI' }, { title: "Stardew Valley Complete Soundtrack",
+	        videoId: 'sfATf-aMvbA' }, { title: "Ori and the Blind Forest - Official Soundtrack Full Album",
+	        videoId: 'MkzeOmkOUHM' }, { title: "Deus Ex: Human Revolution Soundtrack (Full)",
+	        videoId: "tyG6YMLEWus" }, { title: "Super Mario Bros. Original Theme by Nintendo",
+	        videoId: "uhscMsBhNhw" }, { title: "Full Super Mario Bros. 1-3 Soundtracks",
+	        videoId: "SB1VqLCTFpA" }, { title: "Full Super Mario 64 OST",
+	        videoId: "kgVUipXiqOc" }],
 	      currentVid: 0,
-	      currentVideoId: 'dmkpuK6ImWI',
-	      autoplay: false
+	      currentVideoId: 'YKuPQzhk8rY',
+	      autoplay: true
 	    };
 	    _this.updateCurrentVid = _this.updateCurrentVid.bind(_this);
 	    _this.playVid = _this.playVid.bind(_this);
@@ -47112,7 +47112,6 @@
 	      var cVid = this.state.currentVid;
 	      var vidLength = this.state.videos.length - 1;
 	      var newVid = cVid + 1 > vidLength ? 0 : cVid += 1;
-	      console.log(newVid);
 	      var currentVideoId = this.state.videos[newVid].videoId;
 	      this.setState({
 	        currentVid: newVid,
@@ -47124,8 +47123,7 @@
 	    value: function playVid(event) {
 	      {/* YouTube's API has a built-in playVideo function */}
 	      {/* YouTube'sのAPIにはplayVideoの関数があります。これでビデオは始められます。 */}
-	      {} /* BUG BUG BUG Uncomment before sending!!! BUG BUG BUG  */
-	      //  event.target.playVideo();
+	      event.target.playVideo();
 	    }
 	  }, {
 	    key: 'stateChange',
