@@ -1,19 +1,24 @@
 
 How to Use:
+
 使い方：
 
 Click on index.html to open.
+
 index.htmlをクッリクしてください。
 
 Videos will begin playing automatically.
+
 自動的にビデオが始まります。
 
 The shuffle button will always produce a unique shuffle. No two videos will be
 at the same index.
+
 シャフルのボタンは毎回ユニークなシャフルを作ります。各ビデオは新たなポジションに動きます。
 
 Users can change the order of videos by clicking, and then dragging them to where
 they wish.
+
 ビデオをクリック＆ドラッグして、希望のポジションに動かすことで、ユーザーは望ましいリストを作れます。
 
 
